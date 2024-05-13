@@ -14,10 +14,10 @@ public class Blog {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(length = 30, nullable = false)
+    @Column(name = "name", length = 30, nullable = false)
     private String name;
 
-    @Column(length = 60, nullable = false)
+    @Column(name = "blogurl", length = 60, nullable = false)
     private String blogUrl;
 
     @Builder
