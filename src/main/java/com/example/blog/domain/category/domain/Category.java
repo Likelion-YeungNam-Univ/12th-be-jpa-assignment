@@ -2,11 +2,14 @@ package com.example.blog.domain.category.domain;
 
 import com.example.blog.domain.BaseTimeEntity;
 import com.example.blog.domain.user.domain.User;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -19,15 +22,17 @@ public class Category extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private User follower;  // 추후에 관계매핑
+    @NotNull
+    @Column(length = 10)
+    private String name;
 
-    private User following;  // 추후에 관계매핑
-
-    public void setFollower(User follower) {
-        this.follower = follower;
+    @Builder
+    public Category(String name) {
+        this.name = name;
     }
 
-    public void setFollowing(User following) {
-        this.following = following;
+    // 카테고리 이름 변경
+    public void updateCategoryName(String name) {
+        this.name = name;
     }
 }
