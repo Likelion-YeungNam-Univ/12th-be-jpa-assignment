@@ -27,7 +27,6 @@ public class Alarm {
     private LocalDateTime alarmDate;
 
     @Builder
-
     public Alarm(String content, String alarmType) {
         this.content = content;
         this.alarmType = alarmType;
