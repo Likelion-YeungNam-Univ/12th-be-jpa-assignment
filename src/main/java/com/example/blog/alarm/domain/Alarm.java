@@ -45,8 +45,13 @@ public class Alarm {
         return new Alarm(content, "follow");
     }
     // 댓글 알림
-    public static Alarm commentNotification(String commenterName, String commentedItem) {
-        String content = commenterName+"님이 "+commentedItem+"에 댓글을 남겼습니다.";
+    public static Alarm commentNotification(String commenterName, String commentItem) {
+        String content = commenterName+"님이 "+commentItem+"에 댓글을 남겼습니다.";
+        return new Alarm(content, "comment");
+    }
+    // 답글 알림
+    public static Alarm replyNotification(String replierName, String replyItem) {
+        String content = replierName+"님이 "+replyItem+"에 댓글을 남겼습니다.";
         return new Alarm(content, "comment");
     }
 }
