@@ -4,9 +4,12 @@ import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
 
 @Entity
 @Getter
+@DynamicInsert
 @NoArgsConstructor
 public class Like {
     @Id
@@ -14,6 +17,7 @@ public class Like {
     private Long id;
 
     @Column(name = "count")
+    @ColumnDefault("0")
     private Long count;
 
     // 좋아요 클릭
