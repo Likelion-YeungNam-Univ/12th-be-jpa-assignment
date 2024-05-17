@@ -1,4 +1,4 @@
-package com.example.blog.postcategory.domain;
+package com.example.blog.domain.postcategory.domain;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;

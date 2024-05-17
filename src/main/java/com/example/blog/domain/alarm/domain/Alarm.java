@@ -1,4 +1,4 @@
-package com.example.blog.alarm.domain;
+package com.example.blog.domain.alarm.domain;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
