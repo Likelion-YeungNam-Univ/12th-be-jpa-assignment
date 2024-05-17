@@ -6,6 +6,8 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import java.time.LocalDateTime;
 
@@ -17,13 +19,15 @@ public class Comment extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "content", length = 300)
+    @Column(name = "content", length = 300,  nullable = false)
     private String content;
 
     @Column(name = "createdAt", nullable = false, updatable = false)
+    @CreatedDate
     private LocalDateTime createdAt;
 
     @Column(name = "updatedAt", nullable = false)
+    @LastModifiedDate
     private LocalDateTime updatedAt;
 
     @Builder
