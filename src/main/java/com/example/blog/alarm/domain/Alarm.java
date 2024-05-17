@@ -33,7 +33,10 @@ public class Alarm {
         this.alarmType = alarmType;
         this.alarmDate = LocalDateTime.now();
     }
-
+    // 공지 알림
+    public static Alarm noticeNotification(String noticeContent) {
+        return new Alarm(noticeContent, "notice");
+    }
     // 좋아요 알림
     public static Alarm likeNotification(String likerName, String likedItem) {
         String content = likerName+"님이 "+likedItem+"의 게시물을 좋아합니다.";
