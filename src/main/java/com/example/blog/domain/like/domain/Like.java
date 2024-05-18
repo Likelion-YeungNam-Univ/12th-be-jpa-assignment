@@ -14,12 +14,8 @@ import java.time.LocalDateTime;
 public class Like {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "likeid")
+    @Column(name = "like_id")
     private Long likeId;
-
-    //fk
-    @Column(name = "userid", nullable = false)
-    private Long userId;
 
     @Column(name = "postid", nullable = false)
     private Long postId;
@@ -29,8 +25,7 @@ public class Like {
 
     @Builder
 
-    public Like(Long userId, Long postId) {
-        this.userId = userId;
+    public Like(Long postId) {
         this.postId = postId;
         this.likeDate = LocalDateTime.now();
     }

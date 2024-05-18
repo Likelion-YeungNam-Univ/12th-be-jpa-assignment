@@ -14,16 +14,8 @@ import java.time.LocalDateTime;
 public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "commentid")
+    @Column(name = "comment_id")
     private Long commentId;
-
-    //fk
-    @Column(name = "postid", nullable = false)
-    private Long postId;
-
-    @Column(name = "userid", nullable = false)
-    private Long userId;
-
 
     @Column(name = "title", nullable = false)
     private String title;
@@ -35,9 +27,7 @@ public class Comment {
     private LocalDateTime commentDate;
 
     @Builder
-    public Comment(Long postId, Long userId, String title, String content) {
-        this.postId = postId;
-        this.userId = userId;
+    public Comment(String title, String content) {
         this.title = title;
         this.content = content;
         this.commentDate = LocalDateTime.now();

@@ -5,6 +5,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
 
 import java.time.LocalDateTime;
 
@@ -14,10 +15,10 @@ import java.time.LocalDateTime;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "userid")
+    @Column(name = "user_id")
     private Long userid;
 
-    @Column(name = "username")
+    @Column(name = "user_name")
     private String username;
 
     @Column(name = "password")
@@ -33,6 +34,7 @@ public class User {
     private LocalDateTime registerDate;
 
     @Column(name = "active")
+    @ColumnDefault("true")
     private boolean active;
 
     @Builder
@@ -42,7 +44,6 @@ public class User {
         this.email = email;
         this.profileImage = profileImage;
         this.registerDate = registerDate;
-        this.active=true;
     }
 
     // 편의 메서드

@@ -5,6 +5,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -14,20 +15,21 @@ public class UserAlarm {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    //fk
-    @Column(name = "userid", nullable = false)
+    //fk, 중간테이블이라 임시로 설정
+    @Column(name = "user_id", nullable = false)
     private Long userId;
-    @Column(name = "alarmid", nullable = false)
+    @Column(name = "alarm_id", nullable = false)
     private Long alarmId;
 
     @Column(name = "read_status", nullable = false)
+    @ColumnDefault("false")
     private boolean readStatus;
 
     @Builder
-    public UserAlarm(Long userId, Long alarmId) {
+    public UserAlarm(Long userId, Long alarmId, Boolean readStatus) {
         this.userId = userId;
         this.alarmId = alarmId;
-        this.readStatus=false;
+        this.readStatus=readStatus;
     }
 
     //읽음 상태

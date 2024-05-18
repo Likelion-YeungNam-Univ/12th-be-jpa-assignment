@@ -14,22 +14,22 @@ import java.time.LocalDateTime;
 public class Follow {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "followid")
+    @Column(name = "follow_id")
     private Long followId;
 
-    //fk, 팔로워 userId
-    @Column(name = "followerid", nullable = false)
+    //fk, 팔로워 userId, 임시로 설정
+    @Column(name = "follower_id", nullable = false)
     private Long followerId;
 
-    //fk, 팔로잉 userId
-    @Column(name = "followingid", nullable = false)
+    //fk, 팔로잉 userId 임시로 설정
+    @Column(name = "following_id", nullable = false)
     private Long followingId;
 
     @Column(name = "follow_date", nullable = false)
     private LocalDateTime followDate;
 
     @Builder
-    public Follow(Long followerId, Long followingId) {
+    public Follow(Long followerId, Long followingId, LocalDateTime followDate) {
         this.followerId = followerId;
         this.followingId = followingId;
         this.followDate = LocalDateTime.now();
