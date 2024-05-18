@@ -1,6 +1,7 @@
 package com.example.blog.domain.reply.domain;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -17,11 +18,12 @@ public class Reply {
     @Column(name = "reply_id")
     private Long replyId;
 
-
-    @Column(name = "content", nullable = false)
+    @NotNull
+    @Column(name = "content")
     private String content;
 
-    @Column(name = "reply_date", nullable = false)
+    @NotNull
+    @Column(name = "reply_date")
     private LocalDateTime replyDate;
 
     @Builder
@@ -30,7 +32,7 @@ public class Reply {
         this.replyDate = LocalDateTime.now();
     }
 
-    //수정
+    // 수정
     public void updateContent(String content) {
         this.content = content;
     }

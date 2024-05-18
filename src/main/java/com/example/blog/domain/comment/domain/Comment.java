@@ -1,6 +1,7 @@
 package com.example.blog.domain.comment.domain;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -17,13 +18,16 @@ public class Comment {
     @Column(name = "comment_id")
     private Long commentId;
 
-    @Column(name = "title", nullable = false)
+    @NotNull
+    @Column(name = "title")
     private String title;
 
-    @Column(name = "content", nullable = false)
+    @NotNull
+    @Column(name = "content")
     private String content;
 
-    @Column(name = "comment_date", nullable = false)
+    @NotNull
+    @Column(name = "comment_date")
     private LocalDateTime commentDate;
 
     @Builder
@@ -33,7 +37,7 @@ public class Comment {
         this.commentDate = LocalDateTime.now();
     }
 
-    //수정
+    // 수정
     public void updateTitle(String title) {
         this.title = title;
     }
@@ -41,7 +45,7 @@ public class Comment {
         this.content = content;
     }
     public void updateCommentInfo(String title, String content) {
-        this.title=title;
-        this.content=content;
+        this.title = title;
+        this.content = content;
     }
 }

@@ -1,6 +1,7 @@
 package com.example.blog.domain.useralarm.domain;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -16,12 +17,16 @@ public class UserAlarm {
     private Long id;
 
     //fk, 중간테이블이라 임시로 설정
-    @Column(name = "user_id", nullable = false)
+    @NotNull
+    @Column(name = "user_id")
     private Long userId;
-    @Column(name = "alarm_id", nullable = false)
+
+    @NotNull
+    @Column(name = "alarm_id")
     private Long alarmId;
 
-    @Column(name = "read_status", nullable = false)
+    @NotNull
+    @Column(name = "read_status")
     @ColumnDefault("false")
     private boolean readStatus;
 

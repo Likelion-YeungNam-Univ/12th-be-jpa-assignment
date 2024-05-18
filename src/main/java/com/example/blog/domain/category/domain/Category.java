@@ -1,6 +1,7 @@
 package com.example.blog.domain.category.domain;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -15,7 +16,8 @@ public class Category {
     @Column(name = "category_id")
     private Long categoryId;
 
-    @Column(name = "category_name", nullable = false)
+    @NotNull
+    @Column(name = "category_name")
     private String categoryName;
 
     @Builder

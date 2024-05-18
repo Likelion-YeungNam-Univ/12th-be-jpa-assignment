@@ -1,6 +1,7 @@
 package com.example.blog.domain.post.domain;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -18,22 +19,27 @@ public class Post {
     @Column(name = "post_id")
     private Long postId;
 
-    @Column(name = "title", nullable = false)
+    @NotNull
+    @Column(name = "title")
     private String title;
 
-    @Column(name = "content", nullable = false)
+    @NotNull
+    @Column(name = "content")
     private String content;
 
-    @Column(name = "post_date", nullable = false)
+    @NotNull
+    @Column(name = "post_date")
     private LocalDateTime postDate;
 
-    //조회수
-    @Column(name = "views", nullable = false)
+    // 조회수
+    @NotNull
+    @Column(name = "views")
     @ColumnDefault("0")
     private int views;
 
-    //좋아요수
-    @Column(name = "like_cnt", nullable = false)
+    // 좋아요 수
+    @NotNull
+    @Column(name = "like_cnt")
     @ColumnDefault("0")
     private int likeCnt;
 
@@ -42,25 +48,29 @@ public class Post {
         this.title = title;
         this.content = content;
         this.postDate = LocalDateTime.now();
+        this.views = 0;
+        this.likeCnt = 0;
     }
-    //수정 메소드
+
+    // 수정 메소드
     public void updateTitle(String title) {
         this.title = title;
     }
     public void updateContent(String content) {
         this.content = content;
     }
-
-    //조회수 증가
+    // 조회수 증가
     public void updateViews() {
         this.views++;
     }
-    //좋아요 증가
+    // 좋아요 증가
     public void upLikeCnt() {
         this.likeCnt++;
     }
-    //좋아요 취소
+    // 좋아요 취소
     public void downLikeCnt() {
-        if(this.likeCnt>0) {this.likeCnt--;}
+        if (this.likeCnt > 0) {
+            this.likeCnt--;
+        }
     }
 }

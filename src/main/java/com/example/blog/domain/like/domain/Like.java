@@ -1,6 +1,7 @@
 package com.example.blog.domain.like.domain;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -17,14 +18,15 @@ public class Like {
     @Column(name = "like_id")
     private Long likeId;
 
-    @Column(name = "postid", nullable = false)
+    @NotNull
+    @Column(name = "postid")
     private Long postId;
 
-    @Column(name = "like_date", nullable = false)
+    @NotNull
+    @Column(name = "like_date")
     private LocalDateTime likeDate;
 
     @Builder
-
     public Like(Long postId) {
         this.postId = postId;
         this.likeDate = LocalDateTime.now();
