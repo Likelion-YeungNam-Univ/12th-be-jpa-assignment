@@ -5,6 +5,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.antlr.v4.runtime.misc.NotNull;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -15,10 +16,12 @@ public class PostCategory {
     private Long id;
 
     //fk, 다대다 중간테이블이라 임시로 설정
-    @Column(name = "post_id", nullable = false)
+    @NotNull
+    @Column(name = "post_id")
     private Long postId;
 
-    @Column(name = "category_id", nullable = false)
+    @NotNull
+    @Column(name = "category_id")
     private Long categoryId;
 
     @Builder

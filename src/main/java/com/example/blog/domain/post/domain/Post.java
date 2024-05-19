@@ -5,6 +5,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.antlr.v4.runtime.misc.NotNull;
 import org.hibernate.annotations.ColumnDefault;
 
 import java.time.LocalDateTime;
@@ -18,22 +19,27 @@ public class Post {
     @Column(name = "post_id")
     private Long postId;
 
-    @Column(name = "title", nullable = false)
+    @NotNull
+    @Column(name = "title")
     private String title;
 
-    @Column(name = "content", nullable = false)
+    @NotNull
+    @Column(name = "content")
     private String content;
 
-    @Column(name = "post_date", nullable = false)
+    @NotNull
+    @Column(name = "post_date")
     private LocalDateTime postDate;
 
-    //조회수
-    @Column(name = "views", nullable = false)
+    // 조회수
+    @NotNull
+    @Column(name = "views")
     @ColumnDefault("0")
     private int views;
 
-    //좋아요수
-    @Column(name = "like_cnt", nullable = false)
+    // 좋아요 수
+    @NotNull
+    @Column(name = "like_cnt")
     @ColumnDefault("0")
     private int likeCnt;
 
@@ -61,6 +67,8 @@ public class Post {
     }
     //좋아요 취소
     public void downLikeCnt() {
-        if(this.likeCnt>0) {this.likeCnt--;}
+        if(this.likeCnt>0) {
+            this.likeCnt--;
+        }
     }
 }

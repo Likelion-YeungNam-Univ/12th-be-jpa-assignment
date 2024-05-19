@@ -5,6 +5,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.antlr.v4.runtime.misc.NotNull;
 import org.hibernate.annotations.ColumnDefault;
 
 import java.time.LocalDateTime;
@@ -19,21 +20,27 @@ public class User {
     private Long userid;
 
     @Column(name = "user_name")
+    @NotNull
     private String username;
 
     @Column(name = "password")
+    @NotNull
     private String password;
 
     @Column(name = "email")
+    @NotNull
     private String email;
 
     @Column(name = "profile_image")
+    @NotNull
     private String profileImage;
 
     @Column(name = "register_date")
+    @NotNull
     private LocalDateTime registerDate;
 
     @Column(name = "active")
+    @NotNull
     @ColumnDefault("true")
     private boolean active;
 

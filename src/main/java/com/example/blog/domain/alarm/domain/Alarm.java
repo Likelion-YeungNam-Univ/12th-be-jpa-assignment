@@ -5,6 +5,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.antlr.v4.runtime.misc.NotNull;
 
 import java.time.LocalDateTime;
 
@@ -17,13 +18,16 @@ public class Alarm {
     @Column(name = "alarmid")
     private Long alarmId;
 
-    @Column(name = "content", nullable = false)
+    @NotNull
+    @Column(name = "content")
     private String content;
 
-    @Column(name = "alarmtype", nullable = false)
+    @NotNull
+    @Column(name = "alarmtype")
     private String alarmType;
 
-    @Column(name = "alarm_date", nullable = false)
+    @NotNull
+    @Column(name = "alarm_date")
     private LocalDateTime alarmDate;
 
     @Builder

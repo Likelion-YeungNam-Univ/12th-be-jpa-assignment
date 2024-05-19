@@ -5,6 +5,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.antlr.v4.runtime.misc.NotNull;
 
 import java.time.LocalDateTime;
 
@@ -17,13 +18,16 @@ public class Comment {
     @Column(name = "comment_id")
     private Long commentId;
 
-    @Column(name = "title", nullable = false)
+    @NotNull
+    @Column(name = "title")
     private String title;
 
-    @Column(name = "content", nullable = false)
+    @NotNull
+    @Column(name = "content")
     private String content;
 
-    @Column(name = "comment_date", nullable = false)
+    @NotNull
+    @Column(name = "comment_date")
     private LocalDateTime commentDate;
 
     @Builder

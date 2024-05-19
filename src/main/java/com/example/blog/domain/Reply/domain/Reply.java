@@ -5,6 +5,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.antlr.v4.runtime.misc.NotNull;
 
 import java.time.LocalDateTime;
 
@@ -17,11 +18,12 @@ public class Reply {
     @Column(name = "reply_id")
     private Long replyId;
 
-
-    @Column(name = "content", nullable = false)
+    @NotNull
+    @Column(name = "content")
     private String content;
 
-    @Column(name = "reply_date", nullable = false)
+    @NotNull
+    @Column(name = "reply_date")
     private LocalDateTime replyDate;
 
     @Builder

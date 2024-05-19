@@ -5,6 +5,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.antlr.v4.runtime.misc.NotNull;
 
 import java.time.LocalDateTime;
 
@@ -17,10 +18,12 @@ public class Like {
     @Column(name = "like_id")
     private Long likeId;
 
-    @Column(name = "postid", nullable = false)
+    @NotNull
+    @Column(name = "postid")
     private Long postId;
 
-    @Column(name = "like_date", nullable = false)
+    @NotNull
+    @Column(name = "like_date")
     private LocalDateTime likeDate;
 
     @Builder
