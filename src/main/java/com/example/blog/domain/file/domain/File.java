@@ -1,6 +1,7 @@
 package com.example.blog.domain.file.domain;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,10 +14,12 @@ public class File {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name", nullable = false, length = 30)
+    @Column(name = "name", length = 30)
+    @NotNull
     private String name;
 
-    @Column(name = "storageUrl", nullable = false, length = 100)
+    @Column(name = "storageUrl", length = 100)
+    @NotNull
     private String storageUrl;
 
     @Builder

@@ -2,6 +2,7 @@ package com.example.blog.domain.comment.domain;
 
 import com.example.blog.util.BaseTimeEntity;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -19,15 +20,18 @@ public class Comment extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "content", length = 300,  nullable = false)
+    @Column(name = "content", length = 300)
+    @NotNull
     private String content;
 
-    @Column(name = "createdAt", nullable = false, updatable = false)
+    @Column(name = "createdAt")
     @CreatedDate
+    @NotNull
     private LocalDateTime createdAt;
 
-    @Column(name = "updatedAt", nullable = false)
+    @Column(name = "updatedAt")
     @LastModifiedDate
+    @NotNull
     private LocalDateTime updatedAt;
 
     @Builder

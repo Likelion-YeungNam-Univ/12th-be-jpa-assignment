@@ -2,6 +2,7 @@ package com.example.blog.domain.board.domain;
 
 import com.example.blog.util.BaseTimeEntity;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -22,19 +23,22 @@ public class Board extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "title", length = 30, nullable = false)
+    @Column(name = "title", length = 30)
+    @NotNull
     private String title;
 
     @Column(name = "content", length = 1024)
     @ColumnDefault("")
     private String content;
 
-    @Column(name = "createdAt", nullable = false, updatable = false)
+    @Column(name = "createdAt", updatable = false)
     @CreatedDate
+    @NotNull
     private LocalDateTime createdAt;
 
-    @Column(name = "updatedAt", nullable = false)
+    @Column(name = "updatedAt")
     @LastModifiedDate
+    @NotNull
     private LocalDateTime updatedAt;
 
     @Column(name = "view")

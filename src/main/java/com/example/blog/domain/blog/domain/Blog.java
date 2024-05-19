@@ -1,6 +1,7 @@
 package com.example.blog.domain.blog.domain;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -14,10 +15,12 @@ public class Blog {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name", length = 30, nullable = false)
+    @Column(name = "name", length = 30)
+    @NotNull
     private String name;
 
-    @Column(name = "blogurl", length = 60, nullable = false)
+    @Column(name = "blogurl", length = 60)
+    @NotNull
     private String blogUrl;
 
     @Builder

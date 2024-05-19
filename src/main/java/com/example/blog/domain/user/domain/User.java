@@ -1,6 +1,7 @@
 package com.example.blog.domain.user.domain;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -16,16 +17,20 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "email", length = 50, nullable = false)
+    @Column(name = "email", length = 50)
+    @NotNull
     private String email;
 
-    @Column(name = "password", length = 25, nullable = false)
+    @Column(name = "password", length = 25)
+    @NotNull
     private String password;
 
-    @Column(name = "nickname", length = 25, nullable = false)
+    @Column(name = "nickname", length = 25)
+    @NotNull
     private String nickname;
 
-    @Column(name = "birthdate", nullable = false)
+    @Column(name = "birthdate")
+    @NotNull
     private LocalDate birthdate;
 
     // 빌더 패턴
