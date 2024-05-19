@@ -13,19 +13,19 @@ public class User{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String username;
+    private String nickname;
     private String password;
 
     // 빌더 패턴
     @Builder
-    public User(String username, String password) {
-        this.username = username;
+    public User(String nickname, String password) {
+        this.nickname = nickname;
         this.password = password;
     }
 
     //편의 메서드
-    public void update(String username, String password) {
-        this.username=username;
+    public void update(String nickname, String password) {
+        this.nickname=nickname;
         this.password = password;
     }
 }
