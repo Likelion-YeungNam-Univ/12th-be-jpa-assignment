@@ -12,14 +12,23 @@ public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String title;
-    private String content;
-    private String created_date;
 
     @Column(nullable = false)
-    private LocalDateTime createdDate = LocalDateTime.now(); // 현재 시간으로 작성 시간 초기화
+    private String title;
+
+    @Column(nullable = false, columnDefinition = "TEXT")
+    private String content;
+
+    @Column(nullable = false)
+    private String created_date; // 게시일
+
+    @Column(nullable = false)
     private int read; // 조회수
+
+    @Column(nullable = false)
     private int category_id;
+
+    @Column(nullable = false)
     private int like_id;
 
     // 조회수 증가
