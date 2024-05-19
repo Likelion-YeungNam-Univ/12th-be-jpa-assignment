@@ -1,29 +1,23 @@
-package com.example.blog.domain.board.domain;
+package com.example.blog.domain.comment.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.example.blog.global.util.BaseTimeEntity;
+import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
-
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Comment {
+public class Comment extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(nullable = false)
     private String content;
-    private Long boardId;
-    private LocalDateTime createdAt;
 
     @Builder
-    public Comment(String content, Long boardId) {
+    public Comment(String content) {
         this.content = content;
-        this.boardId = boardId;
     }
 
     public void update(String content){
