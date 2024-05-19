@@ -1,25 +1,23 @@
-package com.example.blog.domain;
+package com.example.blog.domain.notification.domain;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import lombok.Builder;
+import com.example.blog.global.util.BaseTimeEntity;
+import jakarta.persistence.*;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
-
-public class Notification {
+@Entity
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+public class Notification extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Long userId;
-    private Long boardId;
-    private NotificationType notificationType;
-    private LocalDateTime createdAt;
+    @Column(nullable = false)
+    private String title;
+    @Column(nullable = false)
+    private String content;
 
-    @Builder
-    public Notification(Long userId, Long boardId, NotificationType notificationType) {
-        this.userId = userId;
-        this.boardId = boardId;
-        this.notificationType = notificationType;
+    public Notification(NotificationType notificationType) {
+        this.title = notificationType.getTitle();
+        this.content = notificationType.getContent();
     }
 }
