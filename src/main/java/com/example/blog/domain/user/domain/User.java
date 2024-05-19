@@ -46,7 +46,7 @@ public class User extends BaseEntity {
         this.phoneNumber = phoneNumber;
     }
 
-    //편의 메서드
+    // 편의 메서드
     public void modifyProfile(String email, String nickname,String phoneNumber) {
         this.email = email;
         this.nickname = nickname;
