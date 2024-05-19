@@ -29,13 +29,4 @@ public class Follow {
         this.followingId = followingId;
     }
 
-    // 편의 메소드
-    public void updateFollow(Long followerId, Long followingId) {
-        if(followerId != null) {
-            this.followerId = followerId;
-        }
-        if(followingId != null) {
-            this.followingId = followingId;
-        }
-    }
 }
