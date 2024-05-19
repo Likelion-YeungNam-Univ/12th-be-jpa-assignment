@@ -14,7 +14,7 @@ public class PostCategory {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    //fk
+    //fk, 다대다 중간테이블이라 임시로 설정
     @Column(name = "post_id", nullable = false)
     private Long postId;
 

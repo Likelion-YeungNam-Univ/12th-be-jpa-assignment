@@ -1,4 +1,4 @@
-package com.example.blog.domain.Reply.domain;
+package com.example.blog.domain.reply.domain;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -14,12 +14,9 @@ import java.time.LocalDateTime;
 public class Reply {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "replyid")
+    @Column(name = "reply_id")
     private Long replyId;
 
-    //fk
-    @Column(name = "commentid", nullable = false)
-    private Long commentId;
 
     @Column(name = "content", nullable = false)
     private String content;
@@ -28,8 +25,7 @@ public class Reply {
     private LocalDateTime replyDate;
 
     @Builder
-    public Reply(Long commentId, String content) {
-        this.commentId = commentId;
+    public Reply(String content) {
         this.content = content;
         this.replyDate = LocalDateTime.now();
     }

@@ -5,6 +5,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
 
 import java.time.LocalDateTime;
 
@@ -14,12 +15,8 @@ import java.time.LocalDateTime;
 public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "postid")
+    @Column(name = "post_id")
     private Long postId;
-
-    //fk
-    @Column(name = "userid", nullable = false)
-    private Long userId;
 
     @Column(name = "title", nullable = false)
     private String title;
@@ -32,20 +29,19 @@ public class Post {
 
     //조회수
     @Column(name = "views", nullable = false)
+    @ColumnDefault("0")
     private int views;
 
     //좋아요수
     @Column(name = "like_cnt", nullable = false)
+    @ColumnDefault("0")
     private int likeCnt;
 
     @Builder
-    public Post(Long userId, String title, String content) {
-        this.userId = userId;
+    public Post(String title, String content) {
         this.title = title;
         this.content = content;
         this.postDate = LocalDateTime.now();
-        this.views = 0;
-        this.likeCnt = 0;
     }
     //수정 메소드
     public void updateTitle(String title) {
