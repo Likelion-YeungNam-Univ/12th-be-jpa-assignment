@@ -1,6 +1,7 @@
 package com.example.blog.domain.user.domain;
 
 import com.example.blog.global.enums.LoginType;
+import com.example.blog.global.enums.UserRole;
 import com.example.blog.global.jpa.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
