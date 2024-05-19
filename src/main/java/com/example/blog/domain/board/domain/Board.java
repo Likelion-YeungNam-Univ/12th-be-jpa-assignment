@@ -28,7 +28,7 @@ public class Board extends BaseTimeEntity {
     private String title;
 
     @Column(name = "content", length = 1024)
-    @ColumnDefault("")
+    @ColumnDefault("''")
     private String content;
 
     @Column(name = "createdAt", updatable = false)
@@ -41,9 +41,9 @@ public class Board extends BaseTimeEntity {
     @NotNull
     private LocalDateTime updatedAt;
 
-    @Column(name = "view")
+    @Column(name = "view_count")
     @ColumnDefault("0")
-    private int view;
+    private int viewCount;
 
     @Builder
     public Board (String title, String content) {
@@ -60,6 +60,6 @@ public class Board extends BaseTimeEntity {
     }
 
     public void increaseView() {
-        this.view++;
+        this.viewCount++;
     }
 }
