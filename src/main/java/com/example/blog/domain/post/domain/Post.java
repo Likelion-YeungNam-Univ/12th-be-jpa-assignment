@@ -23,8 +23,7 @@ public class Post {
     private String content;
 
     @Builder
-    public Post(User user, String title, String content) {
-        this.user = user;
+    public Post(String title, String content) {
         this.title = title;
         this.content = content;
     }
@@ -33,5 +32,11 @@ public class Post {
     public void update(String title, String content) {
         this.title = title;
         this.content = content;
+    }
+
+    // 연관관계 편의 메서드
+    public void setUser(User user) {
+        this.user = user;
+        user.getPosts().add(this);
     }
 }
