@@ -26,16 +26,15 @@ public class User{
 
     // 빌더 패턴
     @Builder
-    public User(String username, String password) {
+    public User(String username, String email, String password) {
         this.username = username;
-        this.email = username;
+        this.email = email;
         this.password = password;
     }
 
     //편의 메서드
     public void update(String username, String password) {
         this.username = username;
-        this.password = password;
         this.password = password;
     }
 }
