@@ -1,5 +1,7 @@
 package com.example.blog.domain.board.domain;
 
+import com.example.blog.domain.blog.domain.Blog;
+import com.example.blog.domain.user.domain.User;
 import com.example.blog.util.BaseTimeEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -23,6 +25,14 @@ public class Board extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    @JoinColumn(name = "user_id")
+    User user;
+
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    @JoinColumn(name = "blog_id")
+    Blog blog;
+
     @Column(name = "title", length = 30)
     @NotNull
     private String title;
@@ -30,16 +40,6 @@ public class Board extends BaseTimeEntity {
     @Column(name = "content", length = 1024)
     @ColumnDefault("''")
     private String content;
-
-    @Column(name = "createdAt", updatable = false)
-    @CreatedDate
-    @NotNull
-    private LocalDateTime createdAt;
-
-    @Column(name = "updatedAt")
-    @LastModifiedDate
-    @NotNull
-    private LocalDateTime updatedAt;
 
     @Column(name = "view_count")
     @ColumnDefault("0")
@@ -61,5 +61,11 @@ public class Board extends BaseTimeEntity {
 
     public void increaseView() {
         this.viewCount++;
+    }
+
+    public void setBlog(Blog blog) {
+        this.blog = blog;
+        this.user = blog.getUser();
+        this.blog.getBoards().add(this);
     }
 }

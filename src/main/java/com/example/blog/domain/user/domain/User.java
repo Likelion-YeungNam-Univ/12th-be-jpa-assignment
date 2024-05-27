@@ -1,5 +1,6 @@
 package com.example.blog.domain.user.domain;
 
+import com.example.blog.domain.blog.domain.Blog;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
@@ -17,7 +18,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "email", length = 50)
+    @Column(name = "email", length = 50, unique = true)
     @NotNull
     private String email;
 
@@ -25,13 +26,16 @@ public class User {
     @NotNull
     private String password;
 
-    @Column(name = "nickname", length = 25)
+    @Column(name = "nickname", length = 25, unique = true)
     @NotNull
     private String nickname;
 
     @Column(name = "birthdate")
     @NotNull
     private LocalDate birthdate;
+
+    @OneToOne(mappedBy = "user")
+    private Blog blog;
 
     // 빌더 패턴
     @Builder
