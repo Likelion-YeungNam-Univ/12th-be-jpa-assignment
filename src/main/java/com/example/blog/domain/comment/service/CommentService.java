@@ -8,6 +8,8 @@ import com.example.blog.domain.post.domain.Post;
 import com.example.blog.domain.post.repository.PostRepository;
 import com.example.blog.domain.user.domain.User;
 import com.example.blog.domain.user.repository.UserRepository;
+import com.example.blog.handler.exceptionHandler.error.ErrorCode;
+import com.example.blog.handler.exceptionHandler.exception.CustomException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,9 +30,9 @@ public class CommentService {
     public CommentRes save(Long userId, Long postId, CommentReq commentReq) {
 
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new IllegalArgumentException("해당 유저 없음!"));
+                .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
         Post post = postRepository.findById(postId)
-                .orElseThrow(() -> new IllegalArgumentException("해당 게시글 없음!"));
+                .orElseThrow(() -> new CustomException(ErrorCode.POST_NOT_FOUND));
 
 
         Comment comment = commentReq.toCommentEntity();
@@ -54,7 +56,7 @@ public class CommentService {
     public CommentRes update(Long commentId, CommentReq commentReq) {  // update
 
         Comment comment = commentRepository.findById(commentId)
-                .orElseThrow(() -> new IllegalArgumentException("해당 댓글 없음!"));
+                .orElseThrow(() -> new CustomException(ErrorCode.COMMENT_NOT_FOUND));
 
         comment.updateContent(commentReq.getContent());
 
@@ -66,7 +68,7 @@ public class CommentService {
     public void delete(Long commentId) {
 
         Comment comment = commentRepository.findById(commentId)
-                .orElseThrow(() -> new IllegalArgumentException("해당 댓글 없음!"));
+                .orElseThrow(() -> new CustomException(ErrorCode.COMMENT_NOT_FOUND));
 
         commentRepository.delete(comment);
     }

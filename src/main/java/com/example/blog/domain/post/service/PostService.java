@@ -6,6 +6,8 @@ import com.example.blog.domain.post.dto.PostRes;
 import com.example.blog.domain.post.repository.PostRepository;
 import com.example.blog.domain.user.domain.User;
 import com.example.blog.domain.user.repository.UserRepository;
+import com.example.blog.handler.exceptionHandler.error.ErrorCode;
+import com.example.blog.handler.exceptionHandler.exception.CustomException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,7 +24,7 @@ public class PostService {
     @Transactional
     public PostRes createPost(Long userId, PostReq postReq) {
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new IllegalArgumentException("해당 유저 없음!"));
+                .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
 
         Post post = postReq.toPostEntity();
         post.setUser(user);
@@ -33,7 +35,7 @@ public class PostService {
     @Transactional(readOnly = true)
     public PostRes getPost(Long postId) {
         Post post = postRepository.findById(postId)
-                .orElseThrow(() -> new IllegalArgumentException("해당 게시글 없음!"));
+                .orElseThrow(() -> new CustomException(ErrorCode.POST_NOT_FOUND));
         return new PostRes(post);
     }
 
@@ -45,7 +47,7 @@ public class PostService {
     @Transactional
     public PostRes updatePost(Long postId, PostReq postReq) {
         Post foundPost = postRepository.findById(postId)
-                .orElseThrow(() -> new IllegalArgumentException("해당 게시글 없음!"));
+                .orElseThrow(() -> new CustomException(ErrorCode.POST_NOT_FOUND));
 
         foundPost.update(postReq.getTitle(), postReq.getContent());
         return new PostRes(foundPost);
@@ -87,7 +89,7 @@ public class PostService {
     public List<PostRes> readPostByUser(String username) {
 
         User user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new IllegalArgumentException("해당 유저 없음!"));
+                .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
 
         List<Post> posts = postRepository.findByUser(user);
         return posts.stream().map(PostRes::new).collect(Collectors.toList());

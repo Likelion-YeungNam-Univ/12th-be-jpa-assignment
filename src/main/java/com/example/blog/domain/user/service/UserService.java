@@ -5,6 +5,8 @@ import com.example.blog.domain.user.dto.PasswordDto;
 import com.example.blog.domain.user.dto.UserReq;
 import com.example.blog.domain.user.dto.UserRes;
 import com.example.blog.domain.user.repository.UserRepository;
+import com.example.blog.handler.exceptionHandler.error.ErrorCode;
+import com.example.blog.handler.exceptionHandler.exception.CustomException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,7 +30,7 @@ public class UserService {
     @Transactional(readOnly = true)
     public UserRes getUser(Long userId) {
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new IllegalArgumentException("해당 유저 없음"));
+                .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
 
         return new UserRes(user);
     }
@@ -43,7 +45,7 @@ public class UserService {
     @Transactional
     public UserRes updateUser(Long userId, UserReq request) {
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new IllegalArgumentException("해당 유저 없음"));
+                .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
 
         // 여기는 save 안해주나요??
         user.update(request.getUsername(), request.getPassword());
@@ -60,7 +62,7 @@ public class UserService {
     @Transactional
     public UserRes resetUserPassword(Long userId, PasswordDto passwordDto) {
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new IllegalArgumentException("해당 유저 없음"));
+                .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
 
         user.updatePassword(passwordDto.getPassword());
 

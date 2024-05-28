@@ -6,6 +6,8 @@ import com.example.blog.domain.like.domain.Like;
 import com.example.blog.domain.like.repository.LikeRepository;
 import com.example.blog.domain.user.domain.User;
 import com.example.blog.domain.user.repository.UserRepository;
+import com.example.blog.handler.exceptionHandler.error.ErrorCode;
+import com.example.blog.handler.exceptionHandler.exception.CustomException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,13 +25,13 @@ public class LikeService {
     public void likeRestaurant(Long userId, Long commentId) {
 
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new IllegalArgumentException("해당 유저 없음!"));
+                .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
 
         Comment comment = commentRepository.findById(commentId)
-                .orElseThrow(() -> new IllegalArgumentException("해당 댓글 없음!"));
+                .orElseThrow(() -> new CustomException(ErrorCode.COMMENT_NOT_FOUND));
 
         if(likeRepository.existsByUserAndComment(user, comment)) {
-            throw new RuntimeException("해당 댓글에 좋아요를 누른 적이 있습니다.");
+            throw new CustomException(ErrorCode.ALREADY_LIKE_COMMENT);
         }
 
         Like like = Like.builder()
@@ -45,7 +47,7 @@ public class LikeService {
     public void unLikeRestaurant(Long userId, Long commentId) {
 
         Like like = likeRepository.findByUser_IdAndComment_Id(userId, commentId)
-                .orElseThrow(() -> new IllegalArgumentException("해당 좋아요 없음!"));
+                .orElseThrow(() -> new CustomException(ErrorCode.LIKE_NOT_FOUND));
 
         likeRepository.delete(like);
     }
