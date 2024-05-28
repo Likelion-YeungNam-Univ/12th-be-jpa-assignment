@@ -41,4 +41,11 @@ public class BoardService {
     public void deleteBoard(Long boardId) {
         boardRepository.deleteById(boardId);
     }
+
+    public void readBoard(Long boardId) {
+        Board board = boardRepository.findById(boardId)
+                .orElseThrow(() -> new IllegalStateException("board does not exist"));
+
+        board.increaseView();
+    }
 }
