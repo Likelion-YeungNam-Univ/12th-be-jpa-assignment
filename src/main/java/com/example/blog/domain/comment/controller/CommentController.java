@@ -16,23 +16,33 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping("comment")
+@RequestMapping("/post/comment")
 public class CommentController {
     @Autowired
     private CommentService commentService;
 
-    @GetMapping("")
-    public ResponseEntity<?> getAllUsers() {
+    @GetMapping("/{postId}")
+    public ResponseEntity<?> getAllUsers(@PathVariable Long postId) {
         List<CommentResponse> comments = commentService.getAll();
         return ResponseEntity.ok(comments);
     }
 
-    @PostMapping("")
-    public ResponseEntity<?> create(@RequestBody CommentRequest commentRequest){
+    @PostMapping("/{postId}")
+    public ResponseEntity<?> create(@PathVariable Long postId, @RequestBody CommentRequest commentRequest){
         try {
             CommentResponse commentResponse= commentService.create(commentRequest);
             return ResponseEntity.ok(commentResponse);
         } catch (Exception e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @GetMapping("/{postId}/{commentId}")
+    public ResponseEntity<?> get(@PathVariable Long postId, @PathVariable Long commentId){
+        try {
+            CommentResponse commentResponse = commentService.get(postId);
+            return ResponseEntity.ok(commentResponse);
+        } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }

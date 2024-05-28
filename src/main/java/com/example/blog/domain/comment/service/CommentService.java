@@ -14,4 +14,8 @@ public class CommentService {
 
     public List<CommentResponse> getAll() {
     }
+
+    public CommentResponse get(Long postId) {
+    }
+
 }
