@@ -19,7 +19,7 @@ public class PostService {
      * 게시글을 업로드한다.
      * @param postRequest 게시글 dto
      */
-    public PostResponse createPost(PostRequest postRequest) {
+    public PostResponse create(PostRequest postRequest) {
         User user = userRepository.findById(postRequest.userId())
                 .orElseThrow(() -> new IllegalArgumentException("게시글 업로드 불가 : 유저접근오류"));
         Post post = postRequest.toEntity();
@@ -33,17 +33,17 @@ public class PostService {
      * 게시글을 얻어온다.
      * @param postId 게시글아이디
      */
-    public Post getPost(Long postId) {
+    public PostResponse get(Long postId) {
         Post post = postRepository.findById(postId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시글 없음"));
-        return post;
+        return PostResponse.fromEntity(post);
     }
 
     /**
      * 게시글을 삭제한다.
      * @param postId 게시글아이디
      */
-    public void deletePost(Long postId) {
+    public void delete(Long postId) {
         postRepository.deleteById(postId);
     }
 
@@ -51,7 +51,7 @@ public class PostService {
      * 게시글을 수정한다.
      * @param postId 게시글아이디
      */
-    public Post updatePost(Long postId, Post post) {
+    public Post update(Long postId, Post post) {
         Post foundPost = postRepository.findById(postId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시글 없음"));
 
