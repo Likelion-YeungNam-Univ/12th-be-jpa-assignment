@@ -51,12 +51,11 @@ public class PostService {
      * 게시글을 수정한다.
      * @param postId 게시글아이디
      */
-    public Post update(Long postId, Post post) {
-        Post foundPost = postRepository.findById(postId)
+    public PostResponse update(Long postId, PostRequest postRequest) {
+        Post post = postRepository.findById(postId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시글 없음"));
-
-        foundPost.update(post.getTitle(), post.getContent());
-        return foundPost;
+        post.update(post.getTitle(), post.getContent());
+        return PostResponse.fromEntity(post);
     }
 
 }
