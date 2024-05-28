@@ -24,14 +24,13 @@ public class UserService {
                 .collect(Collectors.toList());
     }
 
-    public User getUser(Long userId) {
-        return userRepository.findById(userId)
-                .orElseThrow(() -> new IllegalArgumentException("해당 유저 없음"));
+    public UserResponse getUser(Long userId) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("해당 유저 없음"));
+        return UserResponse.fromEntity(user);
     }
 
     public User createUser(UserRequest request) {
         User user = request.toEntity();
-
         return userRepository.save(user);
     }
 

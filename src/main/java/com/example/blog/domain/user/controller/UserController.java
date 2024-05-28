@@ -18,6 +18,7 @@ import java.util.List;
 public class UserController {
     private final UserService userService;
 
+
     @GetMapping("")
     public ResponseEntity<?> getAllUsers() {
         List<UserResponse> users = userService.getAllUsers();
@@ -26,10 +27,12 @@ public class UserController {
 
     @GetMapping("/{userId}")
     public ResponseEntity<?> getUser(@PathVariable Long userId){
-        User user = userService.getUser(userId);
-        System.out.println(user);
-        UserResponse userRes = UserResponse.fromEntity(user);
-        return ResponseEntity.ok(userRes);
+        try {
+            UserResponse userResponse = userService.getUser(userId);
+            return ResponseEntity.ok(userResponse);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
     @PostMapping("")
