@@ -40,7 +40,7 @@ public class UserService {
         // 여기는 save 안해주나요??
         user.update(request.username(), request.password());
 
-        return user;
+        return userRepository.save(user); // save 추가
     }
 
     public void deleteUser(Long userId) {
