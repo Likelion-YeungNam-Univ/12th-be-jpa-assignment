@@ -11,11 +11,13 @@ public class PostRes {
     private final String title;
     private final String content;
     private final String username;
+    private final Integer view;
 
     public PostRes(Post post) {
         this.id = post.getId();
         this.title = post.getTitle();
         this.content = post.getContent();
         this.username = post.getUser().getUsername();
+        this.view = post.getView();
     }
 }
