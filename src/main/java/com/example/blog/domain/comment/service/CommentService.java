@@ -5,7 +5,6 @@ import com.example.blog.domain.comment.dto.CommentRequest;
 import com.example.blog.domain.comment.dto.CommentResponse;
 import com.example.blog.domain.comment.repository.CommentRepository;
 import com.example.blog.domain.post.domain.Post;
-import com.example.blog.domain.post.dto.PostResponse;
 import com.example.blog.domain.post.repository.PostRepository;
 import com.example.blog.domain.user.domain.User;
 import com.example.blog.domain.user.repository.UserRepository;
@@ -71,8 +70,11 @@ public class CommentService {
      * @param postId 게시글아이디
      * @param commentId 댓글아이디
      */
-    public CommentResponse update(Long postId, Long commentId) {
-
+    public CommentResponse update(Long postId, Long commentId, CommentRequest commentRequest) {
+        Comment comment = commentRepository.findByPostIdAndId(postId, commentId)
+                .orElseThrow(()-> new IllegalArgumentException("해당 댓글 없음"));
+        comment.update(comment.getContent());
+        return CommentResponse.fromEntity(comment);
     }
 
     /**
@@ -81,5 +83,6 @@ public class CommentService {
      * @param commentId 댓글아이디
      */
     public void delete(Long postId, Long commentId) {
+        commentRepository.deleteByPostIdAndId(postId, commentId);
     }
 }
