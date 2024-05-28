@@ -15,10 +15,16 @@ import java.util.List;
 @Getter
 public class User{
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // 기본키 생성
     private Long id;
+
+    @Column(nullable = true)
     private String username;
+
+    @Column(nullable = true)
     private String email;
+
+    @Column(nullable = true)
     private String password;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
@@ -31,6 +37,7 @@ public class User{
         this.email = email;
         this.password = password;
     }
+
 
     //편의 메서드
     public void update(String username, String password) {
