@@ -41,12 +41,13 @@ public class PostService {
     }
 
     /**
-     * 게시글을 얻어온다.
+     * 게시글을 얻어오고 조회수를 1 증가시킨다.
      * @param postId 게시글아이디
      */
     public PostResponse get(Long postId) {
         Post post = postRepository.findById(postId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시글 없음"));
+        post.views();
         return PostResponse.fromEntity(post);
     }
 

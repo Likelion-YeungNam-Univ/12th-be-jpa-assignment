@@ -16,6 +16,7 @@ public class Post {
     private Long id;
     private String title;
     private String content;
+    private int views;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
@@ -26,12 +27,17 @@ public class Post {
     public Post(String title, String content) {
         this.title = title;
         this.content = content;
+        this.views = 0;
     }
 
     // 편의 메서드
     public void update(String title, String content) {
         this.title = title;
         this.content = content;
+    }
+
+    public void views(){
+        this.views++;
     }
 
     public void setUser(User user) {
