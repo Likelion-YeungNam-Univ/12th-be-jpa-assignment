@@ -25,10 +25,10 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> getUser(@PathVariable Long userId){
-        User user = userService.getUser(userId);
+    public ResponseEntity<?> getUser(@PathVariable Long id) {
+        User user = userService.getUser(id);
         UserRes userRes = UserRes.fromEntity(user);
-        return ResponseEntity.ok(user);
+        return ResponseEntity.ok(userRes);
     }
 
     @PostMapping("")
@@ -49,6 +49,13 @@ public class UserController {
     public ResponseEntity<?> deleteUser(@PathVariable Long userId){
         userService.deleteUser(userId);
         return ResponseEntity.ok().build();
+    }
+
+    @PutMapping("/{id}/password")
+    public ResponseEntity<?>  updatePassword(@PathVariable Long id, @RequestBody UserReq pwdReq){
+        User updateUser = userService.updatePassword(id, pwdReq);
+        UserRes userRes = UserRes.fromEntity(updateUser);
+        return ResponseEntity.ok(userRes);
     }
 
 }

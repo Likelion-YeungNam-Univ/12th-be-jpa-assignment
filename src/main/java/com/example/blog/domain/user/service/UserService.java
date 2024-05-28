@@ -46,4 +46,22 @@ public class UserService {
     public void deleteUser(Long userId) {
         userRepository.deleteById(userId);
     }
+
+    //패스워드 변경 메소드
+    public User updatePassword(Long userId, UserReq request){
+        String newPassword = request.password();
+        checkPassword(newPassword);
+        User user= userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 유저 없음"));
+
+        user.update(user.getUsername(),newPassword);
+        return userRepository.save(user);
+    }
+
+    //비밀번호 검증
+    public void checkPassword(String password){
+        if (password.length() < 8) {
+            throw new IllegalArgumentException("비밀번호는 최소 8자리");
+        }
+    }
 }
