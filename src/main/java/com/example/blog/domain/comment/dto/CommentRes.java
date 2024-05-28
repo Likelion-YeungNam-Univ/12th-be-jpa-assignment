@@ -10,11 +10,13 @@ public class CommentRes {
     private final String content;
     private final String postTitle;
     private final String username;
+    private final Integer likeCount;
 
     public CommentRes(Comment comment) {
         this.id = comment.getId();
         this.content = comment.getContent();
         this.postTitle = comment.getPost().getTitle();
         this.username = comment.getUser().getUsername();
+        this.likeCount = comment.getLikes().size();
     }
 }
