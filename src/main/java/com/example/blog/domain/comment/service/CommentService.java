@@ -66,9 +66,20 @@ public class CommentService {
         return CommentResponse.fromEntity(comment);
     }
 
+    /**
+     * 댓글을 수정한다.
+     * @param postId 게시글아이디
+     * @param commentId 댓글아이디
+     */
     public CommentResponse update(Long postId, Long commentId) {
+
     }
 
+    /**
+     * 댓글을 삭제한다.
+     * @param postId 게시글아이디
+     * @param commentId 댓글아이디
+     */
     public void delete(Long postId, Long commentId) {
     }
 }
