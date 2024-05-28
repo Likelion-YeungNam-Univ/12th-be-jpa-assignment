@@ -14,7 +14,7 @@ import java.util.List;
 @RestController
 @Slf4j
 @AllArgsConstructor
-@RequestMapping("/users")
+@RequestMapping("/user")
 public class UserController {
     private final UserService userService;
 
@@ -47,10 +47,7 @@ public class UserController {
     @PutMapping("/{userId}")
     public ResponseEntity<?> updateUser(@PathVariable Long userId, @RequestBody UserRequest userReq){
         try{
-            User user = userService.updateUser(userId, userReq);
-            UserResponse userRes = UserResponse.fromEntity(user);
-
-            return ResponseEntity.ok("유저변경완료");
+            return ResponseEntity.ok(userService.updateUser(userId, userReq));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }

@@ -4,16 +4,13 @@ import com.example.blog.domain.post.dto.PostRequest;
 import com.example.blog.domain.post.dto.PostResponse;
 import com.example.blog.domain.post.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.net.URI;
-import java.util.List;
 
 @RestController
-@RequestMapping("post")
+@RequestMapping("/post")
 public class PostController {
     @Autowired
     private PostService postService;

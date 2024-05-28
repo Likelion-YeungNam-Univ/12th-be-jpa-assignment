@@ -33,8 +33,10 @@ public class PostService {
      * @param postRequest 게시글 dto
      */
     public PostResponse create(PostRequest postRequest) {
+        System.out.println(postRequest.userId());
         User user = userRepository.findById(postRequest.userId())
                 .orElseThrow(() -> new IllegalArgumentException("게시글 업로드 불가 : 유저접근오류"));
+
         Post post = postRequest.toEntity();
         post.setUser(user);
         postRepository.save(post);
@@ -67,7 +69,8 @@ public class PostService {
     public PostResponse update(Long postId, PostRequest postRequest) {
         Post post = postRepository.findById(postId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시글 없음"));
-        post.update(post.getTitle(), post.getContent());
+        post.update(postRequest.title(), postRequest.content());
+        postRepository.save(post);
         return PostResponse.fromEntity(post);
     }
 

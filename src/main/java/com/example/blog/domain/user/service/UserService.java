@@ -50,12 +50,12 @@ public class UserService {
      * @param userId 유저아이디
      * @param request 유저dto
      * */
-    public User updateUser(Long userId, UserRequest request) {
+    public UserResponse updateUser(Long userId, UserRequest request) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 유저 없음"));
         user.updatePwd(request.password());
-
-        return user;
+        userRepository.save(user);
+        return UserResponse.fromEntity(user);
     }
 
     public void deleteUser(Long userId) {
