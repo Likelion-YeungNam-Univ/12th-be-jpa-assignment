@@ -3,9 +3,6 @@ package com.example.blog.domain.post.controller;
 import com.example.blog.domain.post.dto.PostRequest;
 import com.example.blog.domain.post.dto.PostResponse;
 import com.example.blog.domain.post.service.PostService;
-import com.example.blog.domain.user.domain.User;
-import com.example.blog.domain.user.dto.UserRequest;
-import com.example.blog.domain.user.dto.UserResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -13,11 +10,18 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.List;
 
 @RestController
 public class PostController {
     @Autowired
     private PostService postService;
+
+    @GetMapping("")
+    public ResponseEntity<?> getAllUsers() {
+        List<PostResponse> posts = postService.getAll();
+        return ResponseEntity.ok(posts);
+    }
 
     @PostMapping("")
     public ResponseEntity<?> create(@RequestBody PostRequest postRequest){
@@ -51,5 +55,13 @@ public class PostController {
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
+    }
+
+    @DeleteMapping("/{postId}")
+    public ResponseEntity<?> deleteUser(@PathVariable Long postId){
+        postService.delete(postId);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setLocation(URI.create("http://localhost:8080/post"));
+        return new ResponseEntity<>(headers, HttpStatus.MOVED_PERMANENTLY);
     }
 }

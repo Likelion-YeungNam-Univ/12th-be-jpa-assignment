@@ -10,11 +10,22 @@ import com.example.blog.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @RequiredArgsConstructor
 public class PostService {
     private final PostRepository postRepository;
     private final UserRepository userRepository;
+
+    public List<PostResponse> getAll() {
+        List<Post> posts = postRepository.findAll();
+        return posts.stream()
+                .map(PostResponse::fromEntity)
+                .collect(Collectors.toList());
+    }
+
     /**
      * 게시글을 업로드한다.
      * @param postRequest 게시글 dto
