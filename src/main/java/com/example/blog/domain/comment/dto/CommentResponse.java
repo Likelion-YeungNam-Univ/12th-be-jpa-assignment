@@ -1,6 +1,6 @@
 package com.example.blog.domain.comment.dto;
 
-public record CommenstResponse(
+public record CommentResponse(
         String content
 ) {
 }
