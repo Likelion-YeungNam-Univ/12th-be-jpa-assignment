@@ -16,15 +16,13 @@ import java.util.List;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Blog {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
     @OneToOne
     @JoinColumn(name = "user_id")
     User user;
-
-    @Column(name = "name", length = 30)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @Column(name = "name", length = 30, unique = true)
     @NotNull
     private String name;
 
@@ -36,12 +34,16 @@ public class Blog {
     private List<Board> boards = new ArrayList<>();
 
     @Builder
-    public Blog(String name, String blogUrl) {
+    public Blog(User user, String name) {
         this.name = name;
-        this.blogUrl = blogUrl;
+        this.blogUrl = "www.yulikelion.com/blog/" + user.getNickname();
     }
 
     public void updateName(String name) {
         this.name = name;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }
