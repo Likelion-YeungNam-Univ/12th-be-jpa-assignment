@@ -37,4 +37,9 @@ public class User{
         this.username = username;
         this.password = password;
     }
+
+    // 비밀번호 재설정
+    public void updatePassword(String password) {
+        this.password = password;
+    }
 }
