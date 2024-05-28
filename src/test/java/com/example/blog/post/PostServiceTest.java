@@ -118,6 +118,9 @@ public class PostServiceTest {
                 .content("Content")
                 .build();
 
+        userRepository.save(user);
+        post.setUser(user);
+
         postRepository.save(post);
 
         PostReq postReq = PostReq.builder()
@@ -142,13 +145,16 @@ public class PostServiceTest {
                 .content("Content")
                 .build();
 
-        postRepository.save(post);
+        userRepository.save(user);
+        post.setUser(user);
+        post = postRepository.save(post);
 
         // when
         postService.updateView(post.getId());
+        PostRes foundPost = postService.getPost(post.getId());
 
         // then
-        Assertions.assertEquals(1, post.getView());
+        Assertions.assertEquals(1, foundPost.getView());
     }
 
     @Test
@@ -164,6 +170,10 @@ public class PostServiceTest {
                 .title("Title2")
                 .content("Content2")
                 .build();
+
+        userRepository.save(user);
+        post1.setUser(user);
+        post2.setUser(user);
 
         postRepository.save(post1);
         postRepository.save(post2);
@@ -193,6 +203,10 @@ public class PostServiceTest {
                 .content("Tiger haha")
                 .build();
 
+        userRepository.save(user);
+        post1.setUser(user);
+        post2.setUser(user);
+
         postRepository.save(post1);
         postRepository.save(post2);
 
@@ -217,6 +231,10 @@ public class PostServiceTest {
                 .title("like-Tiger")
                 .content("Tiger haha")
                 .build();
+
+        userRepository.save(user);
+        post1.setUser(user);
+        post2.setUser(user);
 
         postRepository.save(post1);
         postRepository.save(post2);
