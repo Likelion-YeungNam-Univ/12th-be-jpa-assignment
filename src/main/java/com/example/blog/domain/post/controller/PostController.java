@@ -20,17 +20,13 @@ public class PostController {
 
     @GetMapping("")
     public ResponseEntity<?> getAllUsers() {
-        List<PostResponse> posts = postService.getAll();
-        return ResponseEntity.ok(posts);
+        return ResponseEntity.ok(postService.getAll());
     }
 
     @PostMapping("")
     public ResponseEntity<?> create(@RequestBody PostRequest postRequest){
         try {
-            PostResponse postResponse = postService.create(postRequest);
-            HttpHeaders headers = new HttpHeaders();
-            headers.setLocation(URI.create(String.format("http://localhost:8080/post/%s", postResponse.postId())));
-            return new ResponseEntity<>(headers, HttpStatus.MOVED_PERMANENTLY);
+            return ResponseEntity.status(HttpStatus.CREATED).body(postService.create(postRequest));
         } catch (Exception e){
             return ResponseEntity.badRequest().body(e.getMessage());
         }
@@ -39,8 +35,7 @@ public class PostController {
     @GetMapping("/{postId}")
     public ResponseEntity<?> get(@PathVariable Long postId){
         try {
-            PostResponse postResponse = postService.get(postId);
-            return ResponseEntity.ok(postResponse);
+            return ResponseEntity.ok(postService.get(postId));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
@@ -49,10 +44,7 @@ public class PostController {
     @PutMapping("/{postId}")
     public ResponseEntity<?> update(@PathVariable Long postId, @RequestBody PostRequest postRequest){
         try{
-            PostResponse postResponse = postService.update(postId, postRequest);
-            HttpHeaders headers = new HttpHeaders();
-            headers.setLocation(URI.create(String.format("http://localhost:8080/post/%s", postId)));
-            return new ResponseEntity<>(headers, HttpStatus.MOVED_PERMANENTLY);
+            return ResponseEntity.ok(postService.update(postId, postRequest));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
@@ -61,8 +53,6 @@ public class PostController {
     @DeleteMapping("/{postId}")
     public ResponseEntity<?> delete(@PathVariable Long postId){
         postService.delete(postId);
-        HttpHeaders headers = new HttpHeaders();
-        headers.setLocation(URI.create("http://localhost:8080/post"));
-        return new ResponseEntity<>(headers, HttpStatus.MOVED_PERMANENTLY);
+        return ResponseEntity.ok("게시물 삭제완료");
     }
 }
