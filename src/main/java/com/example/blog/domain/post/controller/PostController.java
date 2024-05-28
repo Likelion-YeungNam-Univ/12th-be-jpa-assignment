@@ -1,7 +1,6 @@
 package com.example.blog.domain.post.controller;
 
 import com.example.blog.domain.post.dto.PostRequest;
-import com.example.blog.domain.post.dto.PostResponse;
 import com.example.blog.domain.post.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,6 +13,16 @@ import org.springframework.web.bind.annotation.*;
 public class PostController {
     @Autowired
     private PostService postService;
+
+    @GetMapping("/search")
+    public ResponseEntity<?> Search(@RequestParam(required = false) String title, @RequestParam(required = false) String content) {
+        try {
+            return ResponseEntity.ok(postService.search(title, content));
+        }
+        catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
 
     @GetMapping("")
     public ResponseEntity<?> getAllUsers() {

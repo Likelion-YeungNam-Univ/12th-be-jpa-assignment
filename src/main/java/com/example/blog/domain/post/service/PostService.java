@@ -74,4 +74,21 @@ public class PostService {
         return PostResponse.fromEntity(post);
     }
 
+    public List<PostResponse> search(String title, String content) {
+        if(title != null && content==null) {
+            List<Post> posts = postRepository.findAllByTitleContaining(title)
+                    .orElseThrow(() -> new IllegalArgumentException("게시글 없음"));
+            return posts.stream()
+                    .map(PostResponse::fromEntity)
+                    .collect(Collectors.toList());
+        }
+        else if(title==null && content!=null){
+            List<Post> posts = postRepository.findAllByContentContaining(content)
+                    .orElseThrow(() -> new IllegalArgumentException("게시글 없음"));
+            return posts.stream()
+                    .map(PostResponse::fromEntity)
+                    .collect(Collectors.toList());
+        }
+        throw new IllegalArgumentException("제목이나 내용 중 하나만 검색가능 또는 파라미터 입력 오류");
+    }
 }
