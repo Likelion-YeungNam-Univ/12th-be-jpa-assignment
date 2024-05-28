@@ -15,7 +15,9 @@ public class CommentService {
     public List<CommentResponse> getAll() {
     }
 
-    public CommentResponse get(Long postId) {
+    public CommentResponse get(Long postId, Long commentId) {
     }
 
+    public CommentResponse update(Long postId, Long commentId) {
+    }
 }

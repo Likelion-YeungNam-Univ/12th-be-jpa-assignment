@@ -40,8 +40,20 @@ public class CommentController {
     @GetMapping("/{postId}/{commentId}")
     public ResponseEntity<?> get(@PathVariable Long postId, @PathVariable Long commentId){
         try {
-            CommentResponse commentResponse = commentService.get(postId);
+            CommentResponse commentResponse = commentService.get(postId, commentId);
             return ResponseEntity.ok(commentResponse);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @PutMapping("/{postId}/{commentId}")
+    public ResponseEntity<?> update(@PathVariable Long postId, @PathVariable Long commentId,@RequestBody CommentRequest commentRequest){
+        try{
+            CommentResponse commentResponse = commentService.update(postId, commentId);
+            HttpHeaders headers = new HttpHeaders();
+            headers.setLocation(URI.create(String.format("http://localhost:8080/post/%s", postId)));
+            return new ResponseEntity<>(headers, HttpStatus.MOVED_PERMANENTLY);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
