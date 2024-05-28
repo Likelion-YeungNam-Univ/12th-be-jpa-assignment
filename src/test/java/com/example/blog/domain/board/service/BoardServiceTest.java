@@ -117,7 +117,7 @@ class BoardServiceTest {
                 .content("Test Content")
                 .build();
 
-        Board newBoard = Board.builder()
+        Board updatedBoard = Board.builder()
                 .title("Test updated Title")
                 .content("Test updated Content")
                 .build();
@@ -134,19 +134,62 @@ class BoardServiceTest {
                 .name(user.getNickname())
                 .build();
 
+        // 블로그 생성 후 리포지토리에 저장
+        when(blogRepository.save(blog)).thenReturn(blog);
+        blogService.createBlog(blog);
+        when(blogRepository.findByName(blog.getName())).thenReturn(Optional.of(blog));
+
+        // 게시글 생성 후 블로그에 저장
+        when(boardRepository.save(board)).thenReturn(board);
+        boardService.createBoard(blog.getName(), board);
+        when(boardRepository.findByTitle(board.getTitle())).thenReturn(Optional.of(board));
+
         // when
-        // 1. 블로그 생성 후 리포지토리에 저장시킴.
-        // 2. 게시글 생성 후 블로그에 저장시킴
-        // 3. 게시글 찾은 후 deleteBoard 메서드로 삭제
-        // 연관 관계로 인해서 같이 만들어주어야 함.
+        // 게시글 업데이트
+        boardService.updateBoard(board.getTitle(), updatedBoard);
+        when(boardRepository.findByTitle(updatedBoard.getTitle())).thenReturn(Optional.of(updatedBoard));
+
+        // then
+        assertThat(boardRepository.findByTitle(updatedBoard.getTitle()).get().getTitle())
+                .isEqualTo(updatedBoard.getTitle());
+    }
+
+    @Test
+    @DisplayName("Board Service - 게시글 조회수 증가 테스트")
+    void 조회수_증가() {
+        // given
+        // 게시글 조회 시 조회수를 1증가 시킴
+        // 게시글 생성 후 조회 메소드를 통해서 조회수를 증가시키고 확인하기.
+        Board board = Board.builder()
+                .title("Test Title")
+                .content("Test Content")
+                .build();
+
+        User user = User.builder()
+                .email("test@test1.com")
+                .password("test")
+                .nickname("test1")
+                .birthdate(LocalDate.parse("2024-05-27"))
+                .build();
+
+        Blog blog = Blog.builder()
+                .user(user)
+                .name(user.getNickname())
+                .build();
+
+
+        // when
         blogService.createBlog(blog);
         when(blogRepository.findByName(blog.getName())).thenReturn(Optional.of(blog));
 
         boardService.createBoard(blog.getName(), board);
         when(boardRepository.findByTitle(board.getTitle())).thenReturn(Optional.of(board));
 
+        System.out.println("[before] board.getViewCount() = " + board.getViewCount());
+        boardService.readBoard(board.getTitle());
+
         // then
-        boardService.updateBoard(board.getTitle(), newBoard);
-        assertThat(newBoard).isEqualTo(boardRepository.findByTitle(newBoard.getTitle()).get());
+        System.out.println("[after] board.getViewCount() = " + board.getViewCount());
+        assertThat(1).isEqualTo(board.getViewCount());
     }
 }

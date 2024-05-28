@@ -53,18 +53,19 @@ public class BoardService {
 //        return newBoard;
 //    }
 
-    public void updateBoard(String title, Board board) {
+    public void updateBoard(String title, Board updatedBoard) {
         Board prevBoard = boardRepository.findByTitle(title)
                 .orElseThrow(() -> new IllegalStateException("board does not exist"));
 
         Blog blog = prevBoard.getBlog();
 
         blog.getBoards().remove(prevBoard);
-        blog.getBoards().add(board);
+        blog.getBoards().add(updatedBoard);
 
-        prevBoard.updateTitle(board.getTitle());
-        prevBoard.updateContent(board.getContent());
-        this.boardRepository.save(board);
+        prevBoard.updateTitle(updatedBoard.getTitle());
+        prevBoard.updateContent(updatedBoard.getContent());
+
+        boardRepository.save(prevBoard);
     }
 
 // boardId값으로 삭제
@@ -94,8 +95,15 @@ public class BoardService {
         boardRepository.deleteByTitle(board.getTitle());
     }
 
-    public void readBoard(Long boardId) {
-        Board board = boardRepository.findById(boardId)
+//    public void readBoard(Long boardId) {
+//        Board board = boardRepository.findById(boardId)
+//                .orElseThrow(() -> new IllegalStateException("board does not exist"));
+//
+//        board.increaseView();
+//    }
+
+    public void readBoard(String name) {
+        Board board = boardRepository.findByTitle(name)
                 .orElseThrow(() -> new IllegalStateException("board does not exist"));
 
         board.increaseView();
