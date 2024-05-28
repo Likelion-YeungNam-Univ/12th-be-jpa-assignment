@@ -49,7 +49,6 @@ public class PostService {
     public PostResponse get(Long postId) {
         Post post = postRepository.findById(postId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시글 없음"));
-        post.views();
         return PostResponse.fromEntity(post);
     }
 

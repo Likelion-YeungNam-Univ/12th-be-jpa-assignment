@@ -6,6 +6,9 @@ import com.example.blog.domain.comment.dto.CommentResponse;
 import com.example.blog.domain.comment.repository.CommentRepository;
 import com.example.blog.domain.post.domain.Post;
 import com.example.blog.domain.post.dto.PostResponse;
+import com.example.blog.domain.post.repository.PostRepository;
+import com.example.blog.domain.user.domain.User;
+import com.example.blog.domain.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,23 +20,50 @@ import java.util.stream.Collectors;
 public class CommentService {
     @Autowired
     private CommentRepository commentRepository;
+    @Autowired
+    private UserRepository userRepository;
+    @Autowired
+    private PostRepository postRepository;
 
+    /**
+     * 댓글을 생성한다.
+     * @param postId 게시글아이디
+     * @param commentRequest 댓글 dto
+     */
     public CommentResponse create(Long postId, CommentRequest commentRequest) {
-
-        return null;
+        User user = userRepository.findById(commentRequest.userId())
+                .orElseThrow(() -> new IllegalArgumentException("게시글 업로드 불가 : 유저접근오류"));
+        Post post = postRepository.findById(postId)
+                .orElseThrow(() -> new IllegalArgumentException("게시글 업로드 불가 : 유저접근오류"));
+        Comment comment = commentRequest.toEntity();
+        comment.addAssociate(user, post);
+        commentRepository.save(comment);
+        return CommentResponse.fromEntity(comment);
     }
+
     /**
      * 댓글을 전부 얻어온다.
      * @param postId 게시글아이디
      */
     public List<CommentResponse> getAll(Long postId) {
-        List<Comment> comments = commentRepository.findAllByPostId(postId).orElseThrow(() -> new IllegalArgumentException("접근 오류"));
+        List<Comment> comments = commentRepository.findAllByPostId(postId)
+                .orElseThrow(() -> new IllegalArgumentException("접근 오류"));
+
         return comments.stream()
                 .map(CommentResponse::fromEntity)
                 .collect(Collectors.toList());
     }
 
+    /**
+     * 댓글을 하나 얻어온다.
+     * @param postId 게시글아이디
+     * @param commentId 댓글아이디
+     */
     public CommentResponse get(Long postId, Long commentId) {
+        Comment comment = commentRepository.findByPostIdAndId(postId, commentId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 댓글 없음"));
+
+        return CommentResponse.fromEntity(comment);
     }
 
     public CommentResponse update(Long postId, Long commentId) {

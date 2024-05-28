@@ -59,7 +59,7 @@ public class PostController {
     }
 
     @DeleteMapping("/{postId}")
-    public ResponseEntity<?> deleteUser(@PathVariable Long postId){
+    public ResponseEntity<?> delete(@PathVariable Long postId){
         postService.delete(postId);
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(URI.create("http://localhost:8080/post"));

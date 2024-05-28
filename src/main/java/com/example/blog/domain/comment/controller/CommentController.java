@@ -22,7 +22,7 @@ public class CommentController {
     private CommentService commentService;
 
     @GetMapping("/{postId}")
-    public ResponseEntity<?> getAllUsers(@PathVariable Long postId) {
+    public ResponseEntity<?> getAll(@PathVariable Long postId) {
         List<CommentResponse> comments = commentService.getAll(postId);
         return ResponseEntity.ok(comments);
     }
@@ -58,7 +58,7 @@ public class CommentController {
     }
 
     @DeleteMapping("/{postId}/{commentId}")
-    public ResponseEntity<?> deleteUser(@PathVariable Long postId, @PathVariable Long commentId){
+    public ResponseEntity<?> delete(@PathVariable Long postId, @PathVariable Long commentId){
         commentService.delete(postId, commentId);
         return ResponseEntity.ok("댓글 삭제 완료");
     }

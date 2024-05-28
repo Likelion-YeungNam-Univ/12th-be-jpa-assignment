@@ -16,7 +16,9 @@ public class Comment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "content", nullable = false)
     private String content;
+    @Column(name = "likes", nullable = false)
     private int likes;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -28,9 +30,14 @@ public class Comment {
     private Post post;
 
     @Builder
-    public Comment(String title, String content) {
+    public Comment(String content) {
         this.content = content;
         this.likes = 0;
+    }
+
+    public void addAssociate(User user, Post post){
+        this.user = user;
+        this.post = post;
     }
 
     public void update(String content) {

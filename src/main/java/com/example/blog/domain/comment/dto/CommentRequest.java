@@ -3,7 +3,9 @@ package com.example.blog.domain.comment.dto;
 import com.example.blog.domain.comment.domain.Comment;
 
 public record CommentRequest(
-        String content
+        String content,
+        int likes,
+        Long userId
 ) {
 
     public Comment toEntity() {
