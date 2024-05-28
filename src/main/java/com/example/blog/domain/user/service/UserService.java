@@ -7,6 +7,7 @@ import com.example.blog.domain.user.dto.UserRes;
 import com.example.blog.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -16,6 +17,7 @@ import java.util.stream.Collectors;
 public class UserService {
     private final UserRepository userRepository;
 
+    @Transactional(readOnly = true)
     public List<UserRes> getAllUsers() {
         List<User> users = userRepository.findAll();
         return users.stream()
@@ -23,6 +25,7 @@ public class UserService {
                 .collect(Collectors.toList());
     }
 
+    @Transactional(readOnly = true)
     public UserRes getUser(Long userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 유저 없음"));
@@ -30,12 +33,14 @@ public class UserService {
         return new UserRes(user);
     }
 
+    @Transactional
     public User createUser(UserReq request) {
         User user = request.toUserEntity();
 
         return userRepository.save(user);
     }
 
+    @Transactional
     public User updateUser(Long userId, UserReq request) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 유저 없음"));
@@ -46,11 +51,13 @@ public class UserService {
         return user;
     }
 
+    @Transactional
     public void deleteUser(Long userId) {
         userRepository.deleteById(userId);
     }
 
     // 사용자 비밀번호 재설정
+    @Transactional
     public User resetUserPassword(Long userId, PasswordDto passwordDto) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 유저 없음"));
