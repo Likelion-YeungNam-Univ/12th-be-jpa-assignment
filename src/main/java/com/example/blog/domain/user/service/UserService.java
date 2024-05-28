@@ -1,11 +1,13 @@
 package com.example.blog.domain.user.service;
 
+import com.example.blog.domain.user.dto.PwdDto;
 import com.example.blog.domain.user.dto.UserReq;
 import com.example.blog.domain.user.dto.UserRes;
 import com.example.blog.domain.user.domain.User;
 import com.example.blog.domain.user.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -37,7 +39,6 @@ public class UserService {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 유저 없음"));
 
-        // 여기는 save 안해주나요??
         user.update(request.username(), request.password());
 
         return userRepository.save(user); // save 추가
@@ -47,6 +48,12 @@ public class UserService {
         userRepository.deleteById(userId);
     }
 
+    // 기능 추가 : 비밀번호 재설정
+    public User resetPassword(Long userId, PwdDto pwdDto) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 유저 없음"));
 
-
+        user.update(user.getUsername(), pwdDto.newPassword());
+        return userRepository.save(user);
+    }
 }

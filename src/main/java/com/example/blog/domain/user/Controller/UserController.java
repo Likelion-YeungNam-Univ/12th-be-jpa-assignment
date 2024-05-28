@@ -1,6 +1,7 @@
 package com.example.blog.domain.user.Controller;
 
 import com.example.blog.domain.user.domain.User;
+import com.example.blog.domain.user.dto.PwdDto;
 import com.example.blog.domain.user.dto.UserReq;
 import com.example.blog.domain.user.dto.UserRes;
 import com.example.blog.domain.user.service.UserService;
@@ -49,6 +50,14 @@ public class UserController {
     public ResponseEntity<?> deleteUser(@PathVariable Long userId){
         userService.deleteUser(userId);
         return ResponseEntity.ok().build();
+    }
+
+    // 비밀번호 재생성 API 생성
+    @PutMapping("/{userId}/reset-password")
+    public ResponseEntity<?> resetPassword(@PathVariable Long userId, @RequestBody PwdDto pwdDto) {
+        User user = userService.resetPassword(userId, pwdDto);
+        UserRes userRes = UserRes.fromEntity(user);
+        return ResponseEntity.ok(userRes);
     }
 
 }
