@@ -2,8 +2,10 @@ package com.example.blog.domain.post.service;
 
 import com.example.blog.domain.post.domain.Post;
 import com.example.blog.domain.post.dto.PostRequest;
+import com.example.blog.domain.post.dto.PostResponse;
 import com.example.blog.domain.post.repository.PostRepository;
 import com.example.blog.domain.user.domain.User;
+import com.example.blog.domain.user.dto.UserResponse;
 import com.example.blog.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,13 +19,14 @@ public class PostService {
      * 게시글을 업로드한다.
      * @param postRequest 게시글 dto
      */
-    public Post createPost(PostRequest postRequest) {
+    public PostResponse createPost(PostRequest postRequest) {
         User user = userRepository.findById(postRequest.userId())
                 .orElseThrow(() -> new IllegalArgumentException("게시글 업로드 불가 : 유저접근오류"));
         Post post = postRequest.toEntity();
         post.setUser(user);
+        postRepository.save(post);
 
-        return postRepository.save(post);
+        return PostResponse.fromEntity(post);
     }
 
     /**
