@@ -41,14 +41,14 @@ public class UserService {
     }
 
     @Transactional
-    public User updateUser(Long userId, UserReq request) {
+    public UserRes updateUser(Long userId, UserReq request) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 유저 없음"));
 
         // 여기는 save 안해주나요??
         user.update(request.getUsername(), request.getPassword());
 
-        return user;
+        return new UserRes(user);
     }
 
     @Transactional
@@ -58,12 +58,12 @@ public class UserService {
 
     // 사용자 비밀번호 재설정
     @Transactional
-    public User resetUserPassword(Long userId, PasswordDto passwordDto) {
+    public UserRes resetUserPassword(Long userId, PasswordDto passwordDto) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 유저 없음"));
 
         user.updatePassword(passwordDto.getPassword());
 
-        return user;
+        return new UserRes(user);
     }
 }
