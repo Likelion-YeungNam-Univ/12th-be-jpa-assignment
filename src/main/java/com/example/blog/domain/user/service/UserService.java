@@ -24,22 +24,33 @@ public class UserService {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * 유저를 검색하여 얻어온다.
+     * @param userId 유저아이디
+     */
     public UserResponse getUser(Long userId) {
         User user = userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("해당 유저 없음"));
         return UserResponse.fromEntity(user);
     }
 
+    /**
+     * 유저를 생성한다.
+     * @param request dto
+     */
     public User createUser(UserRequest request) {
         User user = request.toEntity();
         return userRepository.save(user);
     }
 
+    /**
+     * 비밀번호를 변경한다.
+     * @param userId 유저아이디
+     * @param request 유저dto
+     * */
     public User updateUser(Long userId, UserRequest request) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 유저 없음"));
-
-        // 여기는 save 안해주나요??
-        user.update(request.username(), request.password());
+        user.updatePwd(request.password());
 
         return user;
     }

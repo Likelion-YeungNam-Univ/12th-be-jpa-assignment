@@ -20,6 +20,7 @@ public class User{
     private String username;
     private String password;
     private String email;
+
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Post> posts = new ArrayList<>();
 
@@ -31,9 +32,11 @@ public class User{
         this.password = password;
     }
 
-    //편의 메서드
-    public void update(String username, String password) {
-        this.username = username;
+    /**
+     비밀번호를 변경한다.
+     @param password 비밀번호
+     */
+    public void updatePwd(String password) {
         this.password = password;
     }
 }

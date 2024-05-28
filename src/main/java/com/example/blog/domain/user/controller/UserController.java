@@ -25,6 +25,7 @@ public class UserController {
         return ResponseEntity.ok(users);
     }
 
+
     @GetMapping("/{userId}")
     public ResponseEntity<?> getUser(@PathVariable Long userId){
         try {
@@ -39,14 +40,20 @@ public class UserController {
     public ResponseEntity<?> createUser(@RequestBody UserRequest userReq){
         User user = userService.createUser(userReq);
         UserResponse userRes = UserResponse.fromEntity(user);
+
         return ResponseEntity.ok(userRes);
     }
 
     @PutMapping("/{userId}")
     public ResponseEntity<?> updateUser(@PathVariable Long userId, @RequestBody UserRequest userReq){
-        User user = userService.updateUser(userId, userReq);
-        UserResponse userRes = UserResponse.fromEntity(user);
-        return ResponseEntity.ok(userRes);
+        try{
+            User user = userService.updateUser(userId, userReq);
+            UserResponse userRes = UserResponse.fromEntity(user);
+
+            return ResponseEntity.ok("유저변경완료");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
     @DeleteMapping("/{userId}")
