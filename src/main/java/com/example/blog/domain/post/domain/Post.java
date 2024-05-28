@@ -22,6 +22,8 @@ public class Post {
     private String title;
     private String content;
 
+    private int view;
+
     @Builder
     public Post(String title, String content) {
         this.title = title;
