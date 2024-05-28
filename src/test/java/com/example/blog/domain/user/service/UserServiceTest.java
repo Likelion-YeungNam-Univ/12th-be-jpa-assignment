@@ -28,26 +28,6 @@ class UserServiceTest {
     @Autowired
     private UserService userService;
 
-
-    //    @Test
-//    @DisplayName("유저 생성 테스트 - 성공")
-//    void 유저_가입_성공() {
-//        // given
-//        User user = User.builder()
-//                .email("test@test1.com")
-//                .password("test")
-//                .nickname("test1")
-//                .birthdate(LocalDate.parse("2024-05-27"))
-//                .build();
-//
-//        // when
-//        when(userRepository.findByEmail(user.getEmail())).thenReturn(Optional.of(user));
-////        userRepository.save(user);
-//        userService.userSignUp(user);
-//
-//        // then
-//        assertThat(user).isEqualTo(userRepository.findByEmail(user.getEmail()).get());
-//    }
     @Test
     @DisplayName("유저 생성 테스트 - 성공")
     void 유저_가입_성공() {
