@@ -1,16 +1,55 @@
 package com.example.blog.domain.user.controller;
 
-
+import com.example.blog.domain.user.domain.User;
+import com.example.blog.domain.user.dto.UserRequest;
+import com.example.blog.domain.user.dto.UserResponse;
 import com.example.blog.domain.user.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
-@RequestMapping("/auth")
+@Slf4j
+@AllArgsConstructor
+@RequestMapping("/users")
 public class UserController {
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
 
+    @GetMapping("")
+    public ResponseEntity<?> getAllUsers() {
+        List<UserResponse> users = userService.getAllUsers();
+        return ResponseEntity.ok(users);
+    }
+
+    @GetMapping("/{userId}")
+    public ResponseEntity<?> getUser(@PathVariable Long userId){
+        User user = userService.getUser(userId);
+        System.out.println(user);
+        UserResponse userRes = UserResponse.fromEntity(user);
+        return ResponseEntity.ok(userRes);
+    }
+
+    @PostMapping("")
+    public ResponseEntity<?> createUser(@RequestBody UserRequest userReq){
+        User user = userService.createUser(userReq);
+        UserResponse userRes = UserResponse.fromEntity(user);
+        return ResponseEntity.ok(userRes);
+    }
+
+    @PutMapping("/{userId}")
+    public ResponseEntity<?> updateUser(@PathVariable Long userId, @RequestBody UserRequest userReq){
+        User user = userService.updateUser(userId, userReq);
+        UserResponse userRes = UserResponse.fromEntity(user);
+        return ResponseEntity.ok(userRes);
+    }
+
+    @DeleteMapping("/{userId}")
+    public ResponseEntity<?> deleteUser(@PathVariable Long userId){
+        userService.deleteUser(userId);
+        return ResponseEntity.ok().build();
+    }
 
 }

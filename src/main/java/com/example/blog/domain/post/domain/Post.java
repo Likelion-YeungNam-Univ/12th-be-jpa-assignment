@@ -14,13 +14,13 @@ public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
-    @JoinColumn(name = "user_id")
-    User user;
-
     private String title;
     private String content;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
+
 
     @Builder
     public Post(String title, String content) {
@@ -34,7 +34,6 @@ public class Post {
         this.content = content;
     }
 
-    // 연관관계 편의 메서드
     public void setUser(User user) {
         this.user = user;
         user.getPosts().add(this);
