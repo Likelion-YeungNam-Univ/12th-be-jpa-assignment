@@ -17,7 +17,7 @@ public class Post {
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     @JoinColumn(name = "user_id")
-    User user;
+    User user; // 작성자 필드
 
     private String title;
     private String content;
