@@ -17,6 +17,9 @@ import java.util.stream.Collectors;
 public class UserService {
     private final UserRepository userRepository;
 
+    /**
+     * 모든 유저를 얻어온다.
+     */
     public List<UserResponse> getAllUsers() {
         List<User> users = userRepository.findAll();
         return users.stream()
@@ -35,7 +38,7 @@ public class UserService {
 
     /**
      * 유저를 생성한다.
-     * @param request dto
+     * @param request 유저dto
      */
     public User createUser(UserRequest request) {
         User user = request.toEntity();
