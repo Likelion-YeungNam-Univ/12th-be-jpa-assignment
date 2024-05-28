@@ -23,14 +23,14 @@ public class CommentController {
 
     @GetMapping("/{postId}")
     public ResponseEntity<?> getAllUsers(@PathVariable Long postId) {
-        List<CommentResponse> comments = commentService.getAll();
+        List<CommentResponse> comments = commentService.getAll(postId);
         return ResponseEntity.ok(comments);
     }
 
     @PostMapping("/{postId}")
     public ResponseEntity<?> create(@PathVariable Long postId, @RequestBody CommentRequest commentRequest){
         try {
-            CommentResponse commentResponse= commentService.create(commentRequest);
+            CommentResponse commentResponse= commentService.create(postId, commentRequest);
             return ResponseEntity.ok(commentResponse);
         } catch (Exception e){
             return ResponseEntity.badRequest().body(e.getMessage());

@@ -18,7 +18,9 @@ import java.util.stream.Collectors;
 public class PostService {
     private final PostRepository postRepository;
     private final UserRepository userRepository;
-
+    /**
+     * 게시글을 전부 얻어온다.
+     */
     public List<PostResponse> getAll() {
         List<Post> posts = postRepository.findAll();
         return posts.stream()
