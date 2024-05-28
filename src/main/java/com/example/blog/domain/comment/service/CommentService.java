@@ -20,4 +20,7 @@ public class CommentService {
 
     public CommentResponse update(Long postId, Long commentId) {
     }
+
+    public void delete(Long postId, Long commentId) {
+    }
 }

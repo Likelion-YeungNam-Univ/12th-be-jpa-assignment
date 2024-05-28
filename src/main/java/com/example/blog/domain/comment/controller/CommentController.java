@@ -51,11 +51,15 @@ public class CommentController {
     public ResponseEntity<?> update(@PathVariable Long postId, @PathVariable Long commentId,@RequestBody CommentRequest commentRequest){
         try{
             CommentResponse commentResponse = commentService.update(postId, commentId);
-            HttpHeaders headers = new HttpHeaders();
-            headers.setLocation(URI.create(String.format("http://localhost:8080/post/%s", postId)));
-            return new ResponseEntity<>(headers, HttpStatus.MOVED_PERMANENTLY);
+            return ResponseEntity.ok(commentResponse);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
+    }
+
+    @DeleteMapping("/{postId}/{commentId}")
+    public ResponseEntity<?> deleteUser(@PathVariable Long postId, @PathVariable Long commentId){
+        commentService.delete(postId, commentId);
+        return ResponseEntity.ok("댓글 삭제 완료");
     }
 }
