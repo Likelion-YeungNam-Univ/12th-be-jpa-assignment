@@ -13,6 +13,7 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
+@RequestMapping("post")
 public class PostController {
     @Autowired
     private PostService postService;
