@@ -29,10 +29,10 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Long> update(@PathVariable Long id,
+    public ResponseEntity<String> update(@PathVariable Long id,
                                        @RequestBody UserUpdateRequestDto request){
-        User response = userService.update(id, request);
-        return ResponseEntity.ok().body(response.getId());
+        userService.update(id, request);
+        return ResponseEntity.ok().body("수정이 완료되었습니다.");
     }
 
     @DeleteMapping("/{id}")
@@ -42,7 +42,7 @@ public class UserController {
         return ResponseEntity.ok().body("삭제가 완료되었습니다.");
     }
 
-    @PutMapping("/reset/{id}")
+    @PutMapping("/password/{id}")
     public ResponseEntity<String> resetPassword(@PathVariable Long id,
                                               @RequestBody UserPasswordRequestDto request){
         userService.resetPassword(id, request);
