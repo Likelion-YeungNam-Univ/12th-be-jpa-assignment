@@ -1,6 +1,7 @@
 package com.example.blog.domain.user.domain;
 
 import com.example.blog.domain.blog.domain.Blog;
+import com.example.blog.domain.comment.domain.Comment;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
@@ -9,6 +10,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -36,6 +39,10 @@ public class User {
 
     @OneToOne(mappedBy = "user")
     private Blog blog;
+
+    @OneToMany(mappedBy = "user")
+    private List<Comment> userComments = new ArrayList<>();
+
 
     // 빌더 패턴
     @Builder

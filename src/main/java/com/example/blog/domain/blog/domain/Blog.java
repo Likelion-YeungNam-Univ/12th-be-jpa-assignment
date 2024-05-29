@@ -1,6 +1,7 @@
 package com.example.blog.domain.blog.domain;
 
 import com.example.blog.domain.board.domain.Board;
+import com.example.blog.domain.comment.domain.Comment;
 import com.example.blog.domain.user.domain.User;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -22,6 +23,7 @@ public class Blog {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Column(name = "name", length = 30, unique = true)
     @NotNull
     private String name;
@@ -32,6 +34,9 @@ public class Blog {
 
     @OneToMany(mappedBy = "blog")
     private List<Board> boards = new ArrayList<>();
+
+    @OneToMany(mappedBy = "blog")
+    private List<Comment> blogComments = new ArrayList<>();
 
     @Builder
     public Blog(User user, String name) {

@@ -1,5 +1,8 @@
 package com.example.blog.domain.comment.domain;
 
+import com.example.blog.domain.blog.domain.Blog;
+import com.example.blog.domain.board.domain.Board;
+import com.example.blog.domain.user.domain.User;
 import com.example.blog.util.BaseTimeEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -7,10 +10,6 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
-
-import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -20,19 +19,21 @@ public class Comment extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    @ManyToOne
+    @JoinColumn(name = "board_id")
+    private Board board;
+
+    @ManyToOne
+    @JoinColumn(name = "blog_id")
+    private Blog blog;
+
     @Column(name = "content", length = 300)
     @NotNull
     private String content;
-
-    @Column(name = "createdAt")
-    @CreatedDate
-    @NotNull
-    private LocalDateTime createdAt;
-
-    @Column(name = "updatedAt")
-    @LastModifiedDate
-    @NotNull
-    private LocalDateTime updatedAt;
 
     @Builder
     public Comment(String content) {
