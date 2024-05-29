@@ -6,10 +6,11 @@ public record PostRes (
     Long id,
     String title,
     String content,
-    Long userId
+    Long userId,
+    int viewCount
 ){
 
     public PostRes fromEntity(Post post) {
-        return new PostRes(post.getId(), post.getTitle(), post.getContent(), userId);
+        return new PostRes(post.getId(), post.getTitle(), post.getContent(), userId, post.getViewCount());
     }
 }

@@ -28,6 +28,7 @@ public class Post {
 
     private String title;
     private String content;
+    private int viewCount = 0;
 
     @Builder
     public Post(String title, String content) {
@@ -45,5 +46,9 @@ public class Post {
     public void setUser(User user) {
         this.user = user;
         user.getPosts().add(this);
+    }
+
+    public void incrementViewCount() {
+        this.viewCount++;
     }
 }
