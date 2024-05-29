@@ -1,14 +1,11 @@
 package com.example.blog.domain.comment.domain;
 
-import jakarta.persistence.Entity;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-
 import com.example.blog.domain.post.domain.Post;
 import com.example.blog.domain.user.domain.User;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
+
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -19,12 +16,14 @@ public class Comment {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "post_id")
-    private Post post;
+    @JoinColumn(name = "user_id")
+    @JsonBackReference
+    private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private User user;
+    @JoinColumn(name = "post_id")
+    @JsonBackReference
+    private Post post;
 
     private String content;
 
@@ -32,9 +31,7 @@ public class Comment {
     private int likes;
 
     @Builder
-    public Comment(Post post, User user, String content, int likes) {
-        this.post = post;
-        this.user = user;
+    public Comment(String content, int likes) {
         this.content = content;
         this.likes = likes;
     }
@@ -42,13 +39,12 @@ public class Comment {
     public void update(String content) {
         this.content = content;
     }
+
     public void setUser(User user) {
         this.user = user;
-        user.getComments().add(this);
     }
+
     public void setPost(Post post) {
         this.post = post;
-        post.getComments().add(this);
     }
 }
-
