@@ -5,10 +5,7 @@ import com.example.blog.domain.likes.dto.LikeRequest;
 import com.example.blog.domain.likes.service.LikesService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/likes")
@@ -20,5 +17,11 @@ public class LikesController {
     public ResponseEntity<Long> create(@RequestBody LikeRequest request){
         Likes likes = likesService.create(request);
         return ResponseEntity.ok().body(likes.getId());
+    }
+
+    @DeleteMapping("")
+    public ResponseEntity<String> delete(@RequestBody LikeRequest request){
+        likesService.delete(request);
+        return ResponseEntity.ok().body("좋아요가 취소되었습니다.");
     }
 }

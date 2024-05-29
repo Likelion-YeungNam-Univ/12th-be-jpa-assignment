@@ -18,6 +18,11 @@ public class LikesService {
     private final UserService userService;
     private final CommentService commentService;
 
+    public Likes findByUserAndComment(User user, Comment comment){
+        return likesRepository.findByUserAndComment(user, comment)
+                .orElseThrow(() -> new IllegalArgumentException("좋아요가 없습니다."));
+    }
+
     @Transactional
     public Likes create(LikeRequest request){
         User user = userService.findById(request.userId());
@@ -25,5 +30,14 @@ public class LikesService {
         comment.increaseLike();
         Likes likes = request.toEntity(user, comment);
         return likesRepository.save(likes);
+    }
+
+    @Transactional
+    public void delete(LikeRequest request){
+        User user = userService.findById(request.userId());
+        Comment comment = commentService.findById(request.commentId());
+        Likes foundLikes = findByUserAndComment(user, comment);
+        comment.decreaseLike();
+        likesRepository.delete(foundLikes);
     }
 }

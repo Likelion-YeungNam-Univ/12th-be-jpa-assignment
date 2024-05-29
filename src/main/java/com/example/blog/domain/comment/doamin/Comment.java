@@ -24,6 +24,8 @@ public class Comment {
 
     private String content;
 
+    private int likeCount;
+
     @Builder
     public Comment(Post post, User user, String content) {
         this.post = post;
@@ -42,5 +44,12 @@ public class Comment {
 
     public void update(String content){
         this.content = content;
+    }
+
+    public void increaseLike(){
+        this.likeCount ++;
+    }
+    public void decreaseLike(){
+        this.likeCount --;
     }
 }
