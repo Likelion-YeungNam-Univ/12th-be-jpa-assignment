@@ -19,4 +19,11 @@ public class LikeController {
         return ResponseEntity.ok().build();
     }
 
+    @GetMapping("/count/{commentId}")
+    public ResponseEntity<Integer> getCommentLikes(@PathVariable Long commentId) {
+        int likeCnt = likeService.getCommentLike(commentId);
+        return ResponseEntity.ok(likeCnt);
+    }
+
+
 }

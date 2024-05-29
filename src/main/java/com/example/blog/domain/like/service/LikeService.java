@@ -11,6 +11,7 @@ import com.example.blog.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -37,6 +38,15 @@ public class LikeService {
             LikeRepository.save(commentLike);
         }
     }
+
+    //댓글 개수
+    public int getCommentLike(Long commentId) {
+        Comment comment = commentRepository.findById(commentId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 댓글 없음!"));
+        List<CommentLike> likes = LikeRepository.findByComment(comment);
+        return likes.size();
+    }
+
 
 
 }
