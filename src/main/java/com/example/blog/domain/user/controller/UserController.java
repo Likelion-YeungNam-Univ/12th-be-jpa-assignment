@@ -1,6 +1,5 @@
 package com.example.blog.domain.user.controller;
 
-import com.example.blog.domain.user.domain.User;
 import com.example.blog.domain.user.dto.UserRequest;
 import com.example.blog.domain.user.dto.UserResponse;
 import com.example.blog.domain.user.service.UserService;
@@ -8,8 +7,6 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @Slf4j
@@ -21,16 +18,14 @@ public class UserController {
 
     @GetMapping("")
     public ResponseEntity<?> getAllUsers() {
-        List<UserResponse> users = userService.getAllUsers();
-        return ResponseEntity.ok(users);
+        return ResponseEntity.ok(userService.getAllUsers());
     }
 
 
     @GetMapping("/{userId}")
     public ResponseEntity<?> getUser(@PathVariable Long userId){
         try {
-            UserResponse userResponse = userService.getUser(userId);
-            return ResponseEntity.ok(userResponse);
+            return ResponseEntity.ok(userService.getUser(userId));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
@@ -38,10 +33,7 @@ public class UserController {
 
     @PostMapping("")
     public ResponseEntity<?> createUser(@RequestBody UserRequest userReq){
-        User user = userService.createUser(userReq);
-        UserResponse userRes = UserResponse.fromEntity(user);
-
-        return ResponseEntity.ok(userRes);
+        return ResponseEntity.ok(UserResponse.fromEntity(userService.createUser(userReq)));
     }
 
     @PutMapping("/{userId}")

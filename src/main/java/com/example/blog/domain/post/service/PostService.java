@@ -5,7 +5,6 @@ import com.example.blog.domain.post.dto.PostRequest;
 import com.example.blog.domain.post.dto.PostResponse;
 import com.example.blog.domain.post.repository.PostRepository;
 import com.example.blog.domain.user.domain.User;
-import com.example.blog.domain.user.dto.UserResponse;
 import com.example.blog.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

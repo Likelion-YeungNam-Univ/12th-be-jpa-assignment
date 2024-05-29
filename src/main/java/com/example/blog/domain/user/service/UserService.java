@@ -5,9 +5,7 @@ import com.example.blog.domain.user.dto.UserRequest;
 import com.example.blog.domain.user.dto.UserResponse;
 import com.example.blog.domain.user.repository.UserRepository;
 import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 import java.util.stream.Collectors;
