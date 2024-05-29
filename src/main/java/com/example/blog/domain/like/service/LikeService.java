@@ -15,6 +15,12 @@ public class LikeService {
     private LikeRepository likeRepository;
     @Autowired
     private CommentRepository commentRepository;
+
+    /**
+     * 좋아요 또는 좋아요 취소 기능을 수행한다.
+     * @param postId 게시글 id
+     * @param commentId 댓글 id
+     * */
     @Transactional
     public CommentResponse likeOrUnlike(Long postId, Long commentId) {
         Comment comment = commentRepository.findByPostIdAndId(postId, commentId).orElseThrow(()-> new IllegalArgumentException("검색 오류"));
@@ -27,6 +33,11 @@ public class LikeService {
         return unlike(comment, likes);
     }
 
+    /**
+     * 좋아요를 취소한다.
+     * @param comment 댓글 엔티티
+     * @param likes 좋아요 엔티티
+     * */
     private CommentResponse unlike(Comment comment, Likes likes) {
         likeRepository.delete(likes);
         comment.unlike();
@@ -34,6 +45,10 @@ public class LikeService {
         return CommentResponse.fromEntity(comment);
     }
 
+    /**
+     * 좋아요를 취소한다.
+     * @param comment 댓글 엔티티
+     * */
     public CommentResponse like(Comment comment){
         likeRepository.save(Likes.of(comment.getUser(), comment.getPost(), comment));
         comment.like();
