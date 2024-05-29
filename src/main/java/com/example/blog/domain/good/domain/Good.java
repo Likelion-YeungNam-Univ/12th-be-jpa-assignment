@@ -1,8 +1,9 @@
-package com.example.blog.domain.like.domain;
+package com.example.blog.domain.good.domain;
 
 import com.example.blog.domain.comment.domain.Comment;
 import com.example.blog.domain.user.domain.User;
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -15,16 +16,23 @@ public class Good {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     User user;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "comment_id")
     Comment comment;
 
-
-
     private boolean likeCheck;
+
+    @Builder
+    public Good(boolean likeCheck){
+        this.likeCheck = likeCheck;
+    }
+
+    public void updateLikeCheck(boolean likeCheck){
+        this.likeCheck = likeCheck;
+    }
 
 }

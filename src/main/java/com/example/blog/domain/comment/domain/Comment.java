@@ -1,30 +1,30 @@
 package com.example.blog.domain.comment.domain;
 
-import com.example.blog.domain.like.domain.Good;
+import com.example.blog.domain.good.domain.Good;
 import com.example.blog.domain.post.domain.Post;
 import com.example.blog.domain.user.domain.User;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Getter
+@Data
 public class Comment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    @Setter
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     User user;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    @Setter
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "post_id")
     Post post;
 
@@ -33,7 +33,13 @@ public class Comment {
 
     private String content;
 
+    @Builder
+    public Comment(String content) {
+        this.content = content;
+    }
 
-
+    public void update(String content) {
+        this.content = content;
+    }
 
 }
