@@ -2,7 +2,6 @@ package com.example.blog.domain.comment.service;
 
 import com.example.blog.domain.comment.doamin.Comment;
 import com.example.blog.domain.comment.dto.CommentRequest;
-import com.example.blog.domain.comment.dto.CommentUpdateRequest;
 import com.example.blog.domain.comment.repository.CommentRepository;
 import com.example.blog.domain.post.domain.Post;
 import com.example.blog.domain.post.service.PostService;
@@ -28,10 +27,10 @@ public class CommentService {
     }
 
     @Transactional
-    public Comment create(CommentRequest request){
+    public Comment create(Long postId, CommentRequest request){
         log.info("댓글 생성");
         User user = userService.findById(request.userId());
-        Post post = postService.findByPostId(request.postId());
+        Post post = postService.findByPostId(postId);
         Comment createComment = request.toEntity(user, post);
         createComment.setUser(user);
         createComment.setPost(post);
@@ -40,7 +39,7 @@ public class CommentService {
     }
 
     @Transactional
-    public void update(Long id, CommentUpdateRequest request){
+    public void update(Long id, CommentRequest request){
         log.info("댓글 수정");
         Comment foundComment = verifyCommentAuthor(id, request.userId());
         foundComment.update(request.content());
@@ -48,7 +47,7 @@ public class CommentService {
     }
 
     @Transactional
-    public void delete(Long id, CommentUpdateRequest request){
+    public void delete(Long id, CommentRequest request){
         log.info("댓글 삭제");
         Comment foundComment = verifyCommentAuthor(id, request.userId());
         commentRepository.delete(foundComment);
