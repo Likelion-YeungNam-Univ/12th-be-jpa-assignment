@@ -1,6 +1,7 @@
 package com.example.blog.domain.user.domain;
 
 import com.example.blog.domain.comment.domain.Comment;
+import com.example.blog.domain.like.domain.Like;
 import com.example.blog.domain.post.domain.Post;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
@@ -24,12 +25,17 @@ public class User{
     private String email;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "user",  fetch = FetchType.EAGER)
     private List<Post> posts = new ArrayList<>();
 
     @JsonIgnore
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "user",  fetch = FetchType.EAGER)
     private List<Comment> comments = new ArrayList<>();
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "user",  fetch = FetchType.EAGER)
+    private List<Like> likes = new ArrayList<>();
+
     // 빌더 패턴
     @Builder
     public User(String username, String email, String password) {

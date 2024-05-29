@@ -5,9 +5,10 @@ import com.example.blog.domain.user.domain.User;
 
 public record CommentResponse(
         String content,
-        User user
+        User user,
+        int likes
 ) {
     public static CommentResponse fromEntity(Comment comment) {
-        return new CommentResponse(comment.getContent(), comment.getUser());
+        return new CommentResponse(comment.getContent(), comment.getUser(), comment.getLikes());
     }
 }

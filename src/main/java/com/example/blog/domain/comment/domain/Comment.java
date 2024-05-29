@@ -1,5 +1,6 @@
 package com.example.blog.domain.comment.domain;
 
+import com.example.blog.domain.like.domain.Like;
 import com.example.blog.domain.post.domain.Post;
 import com.example.blog.domain.user.domain.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -8,6 +9,9 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -19,6 +23,7 @@ public class Comment {
 
     @Column(name = "content", nullable = false)
     private String content;
+
     @Column(name = "likes", nullable = false)
     private int likes;
 
@@ -31,6 +36,10 @@ public class Comment {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "post_id")
     private Post post;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "comment", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<Like> like = new ArrayList<>();
 
     @Builder
     public Comment(String content) {
