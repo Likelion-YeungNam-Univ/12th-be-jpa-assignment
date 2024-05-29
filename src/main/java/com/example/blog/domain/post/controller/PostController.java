@@ -3,7 +3,6 @@ package com.example.blog.domain.post.controller;
 import com.example.blog.domain.post.domain.Post;
 import com.example.blog.domain.post.dto.PostRequestDto;
 import com.example.blog.domain.post.dto.PostReadResponseDto;
-import com.example.blog.domain.post.dto.PostUpdateRequestDto;
 import com.example.blog.domain.post.service.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -32,5 +31,12 @@ public class PostController {
                                        @RequestBody PostRequestDto request){
         Post response = postService.update(id, request);
         return ResponseEntity.ok().body(response.getId());
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> delete(@PathVariable Long id,
+                                         @RequestBody PostRequestDto request){
+        postService.delete(id, request);
+        return ResponseEntity.ok().body("게시글 삭제 완료");
     }
 }

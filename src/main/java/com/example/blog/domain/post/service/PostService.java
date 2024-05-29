@@ -3,7 +3,6 @@ package com.example.blog.domain.post.service;
 import com.example.blog.domain.post.domain.Post;
 import com.example.blog.domain.post.dto.PostRequestDto;
 import com.example.blog.domain.post.dto.PostReadResponseDto;
-import com.example.blog.domain.post.dto.PostUpdateRequestDto;
 import com.example.blog.domain.post.repository.PostRepository;
 import com.example.blog.domain.user.domain.User;
 import com.example.blog.domain.user.repository.UserRepository;
@@ -49,13 +48,9 @@ public class PostService {
             throw new IllegalArgumentException("해당 게시물의 작성자가 아닙니다.");
     }
 
-    public Post getPost(Long postId) {
-        Post post = postRepository.findById(postId)
-                .orElseThrow(() -> new IllegalArgumentException("해당 게시글 없음!"));
-        return post;
-    }
-
-    public void deletePost(Long postId) {
-        postRepository.deleteById(postId);
+    public void delete(Long postId, PostRequestDto request) {
+        Post foundPost = findByPostId(postId);
+        isWriter(request.userId(), foundPost);
+        postRepository.delete(foundPost);
     }
 }
