@@ -2,7 +2,7 @@ package com.example.blog.domain.user.dto;
 
 import com.example.blog.domain.user.domain.User;
 
-public record UserRequestDto(
+public record UserCreateRequestDto(
         String username,
         String password,
         String email

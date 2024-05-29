@@ -33,8 +33,11 @@ public class User{
     }
 
     //편의 메서드
-    public void update(String username, String password) {
-        this.username = username;
+    public void update(String email) {
+        this.email = email;
+    }
+
+    public void resetPassword(String password) {
         this.password = password;
     }
 }
