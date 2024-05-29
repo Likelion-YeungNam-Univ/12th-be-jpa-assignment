@@ -1,7 +1,6 @@
 package com.example.blog.domain.comment.service;
 
 import com.example.blog.domain.comment.doamin.Comment;
-import com.example.blog.domain.comment.dto.CommentListResponse;
 import com.example.blog.domain.comment.dto.CommentRequest;
 import com.example.blog.domain.comment.dto.CommentUpdateRequest;
 import com.example.blog.domain.comment.repository.CommentRepository;
@@ -40,10 +39,22 @@ public class CommentService {
 
     @Transactional
     public Comment update(Long id, CommentUpdateRequest request){
-        Comment fountComment = findById(id);
-        if(!fountComment.getUser().getId().equals(request.userId()))
+        Comment foundComment = verifyCommentAuthor(id, request.userId());
+        foundComment.update(request.content());
+        return foundComment;
+    }
+
+    @Transactional
+    public void delete(Long id, CommentUpdateRequest request){
+        Comment foundComment = verifyCommentAuthor(id, request.userId());
+        commentRepository.delete(foundComment);
+    }
+
+    @Transactional(readOnly = true)
+    public Comment verifyCommentAuthor(Long commentId, Long userId){
+        Comment comment = findById(commentId);
+        if(!comment.getUser().getId().equals(userId))
             throw new IllegalArgumentException("댓글의 작성자가 아닙니다.");
-        fountComment.update(request.content());
-        return fountComment;
+        return comment;
     }
 }

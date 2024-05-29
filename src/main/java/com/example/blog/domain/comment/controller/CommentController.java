@@ -26,4 +26,11 @@ public class CommentController {
         Comment response = commentService.update(id, request);
         return ResponseEntity.ok().body(response.getId());
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> delete(@PathVariable Long id,
+                                    @RequestBody CommentUpdateRequest request){
+        commentService.delete(id, request);
+        return ResponseEntity.ok().body("댓글 삭제가 완료되었습니다.");
+    }
 }
