@@ -1,5 +1,6 @@
 package com.example.blog.domain.user.domain;
 
+import com.example.blog.domain.comment.doamin.Comment;
 import com.example.blog.domain.post.domain.Post;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -23,6 +24,9 @@ public class User{
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Post> posts = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Comment> comments = new ArrayList<>();
 
     // 빌더 패턴
     @Builder

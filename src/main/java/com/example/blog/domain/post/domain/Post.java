@@ -1,5 +1,6 @@
 package com.example.blog.domain.post.domain;
 
+import com.example.blog.domain.comment.doamin.Comment;
 import com.example.blog.domain.user.domain.User;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -8,6 +9,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -19,8 +23,10 @@ public class Post {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
-    @JoinColumn(name = "user_id")
-    User user;
+    private User user;
+
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
+    private List<Comment> comments = new ArrayList<>();
 
     private String title;
     private String content;
