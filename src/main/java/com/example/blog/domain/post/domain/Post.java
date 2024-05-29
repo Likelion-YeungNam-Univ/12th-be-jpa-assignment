@@ -1,11 +1,16 @@
 package com.example.blog.domain.post.domain;
 
+import com.example.blog.domain.post.dto.PostRes;
 import com.example.blog.domain.user.domain.User;
+import com.example.blog.domain.user.dto.UserRes;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -17,7 +22,7 @@ public class Post {
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     @JoinColumn(name = "user_id")
-    User user; // 작성자 필드
+    private User user; // 작성자 필드
 
     private String title;
     private String content;
@@ -27,6 +32,7 @@ public class Post {
         this.title = title;
         this.content = content;
     }
+
 
     // 편의 메서드
     public void update(String title, String content) {

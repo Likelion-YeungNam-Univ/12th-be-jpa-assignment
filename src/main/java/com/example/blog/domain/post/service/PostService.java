@@ -7,6 +7,8 @@ import com.example.blog.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class PostService {
@@ -36,7 +38,13 @@ public class PostService {
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시글 없음!"));
 
         foundPost.update(post.getTitle(), post.getContent());
-        return foundPost;
+        return postRepository.save(foundPost);
+    }
+
+
+    // getAllPosts
+    public List<Post> getAllPosts() {
+        return postRepository.findAll();
     }
 
 }
