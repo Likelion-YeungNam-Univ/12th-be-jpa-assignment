@@ -2,6 +2,7 @@ package com.example.blog.domain.user.domain;
 
 import com.example.blog.domain.blog.domain.Blog;
 import com.example.blog.domain.comment.domain.Comment;
+import com.example.blog.domain.like.domain.Like;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
@@ -43,6 +44,9 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<Comment> userComments = new ArrayList<>();
 
+    @OneToMany(mappedBy = "user")
+    private List<Like> likes = new ArrayList<>();
+
 
     // 빌더 패턴
     @Builder
@@ -64,5 +68,15 @@ public class User {
 
     public void setBlog(Blog blog) {
         this.blog = blog;
+    }
+
+    public void addLike(Like like) {
+        likes.add(like);
+        like.setUser(this);
+    }
+
+    public void removeLike(Like like) {
+        likes.remove(like);
+        like.setUser(null);
     }
 }

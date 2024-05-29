@@ -2,6 +2,7 @@ package com.example.blog.domain.comment.domain;
 
 import com.example.blog.domain.blog.domain.Blog;
 import com.example.blog.domain.board.domain.Board;
+import com.example.blog.domain.like.domain.Like;
 import com.example.blog.domain.user.domain.User;
 import com.example.blog.util.BaseTimeEntity;
 import jakarta.persistence.*;
@@ -10,6 +11,9 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -35,6 +39,9 @@ public class Comment extends BaseTimeEntity {
     @NotNull
     private String content;
 
+    @OneToMany(mappedBy = "comment")
+    private List<Like> likes = new ArrayList<>();
+
     @Builder
     public Comment(String content) {
         this.content = content;
@@ -54,6 +61,16 @@ public class Comment extends BaseTimeEntity {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public void addLike(Like like) {
+        likes.add(like);
+        like.setComment(this);
+    }
+
+    public void removeLike(Like like) {
+        likes.remove(like);
+        like.setComment(null);
     }
 
 }
