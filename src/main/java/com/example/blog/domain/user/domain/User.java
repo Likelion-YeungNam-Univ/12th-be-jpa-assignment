@@ -1,5 +1,6 @@
 package com.example.blog.domain.user.domain;
 
+import com.example.blog.domain.comment.domain.Comment;
 import com.example.blog.domain.post.domain.Post;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -24,6 +25,9 @@ public class User{
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Post> posts = new ArrayList<>();
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Comment> comments = new ArrayList<>();
+
     // 빌더 패턴
     @Builder
     public User(String username, String email, String password) {
@@ -35,6 +39,11 @@ public class User{
     //편의 메서드
     public void update(String username, String password) {
         this.username = username;
+        this.password = password;
+    }
+
+    // 비밀번호 재설정
+    public void updatePassword(String password) {
         this.password = password;
     }
 }
