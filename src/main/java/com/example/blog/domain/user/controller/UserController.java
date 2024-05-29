@@ -33,4 +33,11 @@ public class UserController {
         User response = userService.update(id, request);
         return ResponseEntity.ok().body(response.getId());
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> delete(@PathVariable Long id,
+                                       @RequestBody UserUpdateRequestDto request){
+        userService.delete(id, request);
+        return ResponseEntity.ok().body("삭제가 완료되었습니다.");
+    }
 }

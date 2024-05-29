@@ -47,6 +47,14 @@ public class UserService {
         return foundUser;
     }
 
+    @Transactional
+    public void delete(Long userId, UserUpdateRequestDto request) {
+        isOwner(userId, request.userId());
+
+        User foundUser = findById(userId);
+        userRepository.delete(foundUser);
+    }
+
     public void isOwner(Long ownerId, Long currentId){
         if(!ownerId.equals(currentId)) throw new IllegalArgumentException("해당 계정의 주인이 아닙니다.");
     }
