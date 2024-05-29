@@ -1,16 +1,21 @@
 package com.example.blog.domain.post.service;
 
 import com.example.blog.domain.post.domain.Post;
+import com.example.blog.domain.post.dto.PostListResponseDto;
 import com.example.blog.domain.post.dto.PostRequestDto;
 import com.example.blog.domain.post.dto.PostReadResponseDto;
 import com.example.blog.domain.post.repository.PostRepository;
 import com.example.blog.domain.user.domain.User;
 import com.example.blog.domain.user.service.UserService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class PostService {
     private final PostRepository postRepository;
@@ -18,43 +23,67 @@ public class PostService {
 
     @Transactional(readOnly = true)
     public Post findByPostId(Long postId){
+        log.info("SELECT : Post include proxy");
         return postRepository.findById(postId)
-                .orElseThrow(() -> new IllegalArgumentException("해당 게시글 없음!"));
+                .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 존재하지 않습니다."));
+    }
+
+    @Transactional(readOnly = true)
+    public Post findFetchByPostId(Long postId){
+        log.info("SELECT : Post, User, Comment");
+        return postRepository.findFetchById(postId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 존재하지 않습니다."));
     }
 
     @Transactional
     public PostReadResponseDto read(Long postId){
-        Post readPost = findByPostId(postId);
+        log.info("게시글 출력(게시물-사용자-댓글)");
+        Post readPost = findFetchByPostId(postId);
         readPost.increaseViewCount();
+        log.info("UPDATE: viewCount");
         return PostReadResponseDto.fromEntity(readPost);
+    }
+
+    @Transactional(readOnly = true)
+    public List<PostListResponseDto> readAll(){
+        log.info("게시글 목록 출력");
+        log.info("SELECT : Post");
+        return postRepository.findAll().stream()
+                .map(PostListResponseDto::fromEntity).toList();
     }
 
     @Transactional
     public Post create(PostRequestDto request) {
+        log.info("게시글 생성");
         User user = userService.findById(request.userId());
         Post createPost = request.toEntity(user);
         createPost.setUser(user);
+        log.info("INSERT : Post");
         return postRepository.save(createPost);
     }
 
     @Transactional
-    public Post update(Long postId, PostRequestDto request) {
-        Post foundPost = findByPostId(postId);
-        isWriter(request.userId(), foundPost);
+    public void update(Long postId, PostRequestDto request) {
+        log.info("게시글 수정");
+        Post foundPost = verifyPostAuthor(postId, request.userId());
         foundPost.update(request.title(), request.content());
-        return foundPost;
+        log.info("UPDATE : title, content");
     }
 
     @Transactional
     public void delete(Long postId, PostRequestDto request) {
-        Post foundPost = findByPostId(postId);
-        isWriter(request.userId(), foundPost);
+        log.info("게시글 삭제");
+        Post foundPost = verifyPostAuthor(postId, request.userId());
         postRepository.delete(foundPost);
+        log.info("DELETE : Post, cascade Comment");
     }
 
-    public void isWriter(Long userId, Post post){
-        User user = userService.findById(userId);
-        if(!user.getId().equals(post.getUser().getId()))
+    @Transactional(readOnly = true)
+    public Post verifyPostAuthor(Long postId, Long userId){
+        log.info("게시글 작성자 검사");
+        Post post = findByPostId(postId);
+        if(!post.getUser().getId().equals(userId))
             throw new IllegalArgumentException("해당 게시물의 작성자가 아닙니다.");
+        return post;
     }
 }

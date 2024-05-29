@@ -1,12 +1,15 @@
 package com.example.blog.domain.post.controller;
 
 import com.example.blog.domain.post.domain.Post;
+import com.example.blog.domain.post.dto.PostListResponseDto;
 import com.example.blog.domain.post.dto.PostRequestDto;
 import com.example.blog.domain.post.dto.PostReadResponseDto;
 import com.example.blog.domain.post.service.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/post")
@@ -20,6 +23,12 @@ public class PostController {
         return ResponseEntity.ok().body(response);
     }
 
+    @GetMapping("")
+    public ResponseEntity<List<PostListResponseDto>> readAll(){
+        List<PostListResponseDto> response = postService.readAll();
+        return ResponseEntity.ok().body(response);
+    }
+
     @PostMapping("")
     public ResponseEntity<Long> create(@RequestBody PostRequestDto request){
         Post response = postService.create(request);
@@ -27,16 +36,16 @@ public class PostController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Long> update(@PathVariable Long id,
+    public ResponseEntity<String> update(@PathVariable Long id,
                                        @RequestBody PostRequestDto request){
-        Post response = postService.update(id, request);
-        return ResponseEntity.ok().body(response.getId());
+        postService.update(id, request);
+        return ResponseEntity.ok().body("수정이 완료되었습니다.");
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> delete(@PathVariable Long id,
                                          @RequestBody PostRequestDto request){
         postService.delete(id, request);
-        return ResponseEntity.ok().body("게시글 삭제 완료");
+        return ResponseEntity.ok().body("삭제가 완료되었습니다.");
     }
 }
