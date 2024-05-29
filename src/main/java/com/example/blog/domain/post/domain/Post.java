@@ -38,7 +38,6 @@ public class Post {
         this.views = 0;
     }
 
-    // 편의 메서드
     public void update(String title, String content) {
         this.title = title;
         this.content = content;

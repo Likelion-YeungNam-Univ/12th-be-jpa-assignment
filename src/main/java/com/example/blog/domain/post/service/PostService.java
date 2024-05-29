@@ -50,6 +50,7 @@ public class PostService {
     public PostResponse get(Long postId) {
         Post post = postRepository.findById(postId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시글 없음"));
+        post.views();
         return PostResponse.fromEntity(post);
     }
 
@@ -73,6 +74,11 @@ public class PostService {
         return PostResponse.fromEntity(post);
     }
 
+    /**
+     * 제목 또는 내용이 포함된 게시글을 검색한다.(동시검색x)
+     * @param title 제목
+     * @param content 내용
+     * */
     public List<PostResponse> search(String title, String content) {
         if(title != null && content==null) {
             List<Post> posts = postRepository.findAllByTitleContaining(title)
