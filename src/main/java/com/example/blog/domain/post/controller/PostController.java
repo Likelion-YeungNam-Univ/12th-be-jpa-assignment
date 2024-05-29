@@ -1,8 +1,9 @@
 package com.example.blog.domain.post.controller;
 
 import com.example.blog.domain.post.domain.Post;
-import com.example.blog.domain.post.dto.PostCreateRequestDto;
+import com.example.blog.domain.post.dto.PostRequestDto;
 import com.example.blog.domain.post.dto.PostReadResponseDto;
+import com.example.blog.domain.post.dto.PostUpdateRequestDto;
 import com.example.blog.domain.post.service.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -21,8 +22,15 @@ public class PostController {
     }
 
     @PostMapping("")
-    public ResponseEntity<Long> create(@RequestBody PostCreateRequestDto request){
-        Post response = postService.create(request.writerId(), request);
+    public ResponseEntity<Long> create(@RequestBody PostRequestDto request){
+        Post response = postService.create(request);
+        return ResponseEntity.ok().body(response.getId());
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Long> update(@PathVariable Long id,
+                                       @RequestBody PostRequestDto request){
+        Post response = postService.update(id, request);
         return ResponseEntity.ok().body(response.getId());
     }
 }
