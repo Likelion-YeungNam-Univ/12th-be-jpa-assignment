@@ -55,4 +55,24 @@ public class PostService {
     public int updateView(Long id) {
         return postRepository.updateView(id);
     }
+
+    public Post searchWriter(String username) {
+        Post searchPost = postRepository.findByUserName(username)
+                .orElseThrow(() -> new IllegalArgumentException("해당 게시글 없음!"));
+
+        return searchPost;
+    }
+    public Post searchTitle(String title) {
+        Post searchPost = postRepository.findByTitle(title)
+                .orElseThrow(() -> new IllegalArgumentException("해당 게시글 없음!"));
+
+        return searchPost;
+    }
+
+    public Post searchTitleOrContent(String title, String content) {
+        Post searchPost = postRepository.findByTitleOrContent(title, content)
+                .orElseThrow(() -> new IllegalArgumentException("해당 게시글 없음!"));
+
+        return searchPost;
+    }
 }

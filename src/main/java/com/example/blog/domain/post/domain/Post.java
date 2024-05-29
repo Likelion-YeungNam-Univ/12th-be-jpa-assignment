@@ -2,10 +2,7 @@ package com.example.blog.domain.post.domain;
 
 import com.example.blog.domain.user.domain.User;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -21,6 +18,8 @@ public class Post {
 
     private String title;
     private String content;
+
+    @Setter
     private int view;
 
     @Builder
@@ -41,4 +40,5 @@ public class Post {
         this.user = user;
         user.getPosts().add(this);
     }
+
 }

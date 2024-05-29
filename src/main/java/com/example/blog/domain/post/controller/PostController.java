@@ -53,4 +53,35 @@ public class PostController {
         return ResponseEntity.ok().build();
     }
 
+    //사용자 검색
+    @GetMapping("/{username}")
+    public ResponseEntity<?> searchWriter(@PathVariable String username){
+        Post post = postService.searchWriter(username);
+        //조회수 증가
+        postService.updateView(post.getId());
+
+        PostRes postRes= PostRes.fromEntity(post);
+        return ResponseEntity.ok(postRes);
+    }
+
+    //제목 검색
+    @GetMapping("/{title}")
+    public ResponseEntity<?> searchTitle(@PathVariable String title){
+        Post post = postService.searchTitle(title);
+        //조회수 증가
+        postService.updateView(post.getId());
+        PostRes postRes= PostRes.fromEntity(post);
+        return ResponseEntity.ok(postRes);
+    }
+
+    //제목 or 내용 검색
+    @GetMapping("/{content}")
+    public ResponseEntity<?> searchTitleOrContent(@PathVariable String title, @PathVariable String content){
+        Post post = postService.searchTitleOrContent(title,content);
+        //조회수 증가
+        postService.updateView(post.getId());
+        PostRes postRes= PostRes.fromEntity(post);
+        return ResponseEntity.ok(postRes);
+    }
+
 }
