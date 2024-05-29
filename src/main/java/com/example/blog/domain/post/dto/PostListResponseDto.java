@@ -5,7 +5,7 @@ import com.example.blog.domain.post.domain.Post;
 public record PostListResponseDto(
         Long postId,
         String title,
-        int view
+        int viewCount
 ) {
     public static PostListResponseDto fromEntity(Post post){
         return new PostListResponseDto(
