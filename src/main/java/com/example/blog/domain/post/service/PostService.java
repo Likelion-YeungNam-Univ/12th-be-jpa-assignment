@@ -5,11 +5,11 @@ import com.example.blog.domain.post.dto.PostRes;
 import com.example.blog.domain.post.repository.PostRepository;
 import com.example.blog.domain.user.domain.User;
 import com.example.blog.domain.user.repository.UserRepository;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -51,28 +51,32 @@ public class PostService {
         return foundPost;
     }
 
-    @Transactional
-    public int updateView(Long id) {
-        return postRepository.updateView(id);
+    public void updateView(Long postId) {
+        Optional<Post> posts = postRepository.findById(postId);
+        if (posts.isPresent()) {
+            Post post = posts.get();
+            post.setView(post.getView() + 1);
+            postRepository.save(post);
+        }
     }
 
-    public Post searchWriter(String username) {
-        Post searchPost = postRepository.findByUserName(username)
-                .orElseThrow(() -> new IllegalArgumentException("해당 게시글 없음!"));
-
-        return searchPost;
+    public List<Post> findByUserUsername(String username) {
+        return postRepository.findByUserUsername(username);
     }
-    public Post searchTitle(String title) {
-        Post searchPost = postRepository.findByTitle(title)
-                .orElseThrow(() -> new IllegalArgumentException("해당 게시글 없음!"));
-
-        return searchPost;
+    public List<Post> findByTitle(String title) {
+        return postRepository.findByTitle(title);
     }
 
-    public Post searchTitleOrContent(String title, String content) {
-        Post searchPost = postRepository.findByTitleOrContent(title, content)
-                .orElseThrow(() -> new IllegalArgumentException("해당 게시글 없음!"));
+    public List<Post> findByTitleOrContent(String title, String content) {
+        return postRepository.findByTitleOrContent(title, content);
+    }
+    public List<Post> searchPost(String keyword) {
+        List <Post> posts = findByUserUsername(keyword);
+        if (!posts.isEmpty()) return posts;
 
-        return searchPost;
+        posts = findByTitle(keyword);
+        if (!posts.isEmpty()) return posts;
+
+        return findByTitleOrContent(keyword, keyword);
     }
 }
