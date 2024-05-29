@@ -1,67 +1,54 @@
 package com.example.blog.domain.user.domain;
 
+import com.example.blog.domain.post.domain.Post;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
-
-@NoArgsConstructor(access = AccessLevel.PROTECTED) // 기본 생성자에 대한 접근 제한
+@NoArgsConstructor
 @Getter
-@Setter
-public class User {
+public class User{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long userId;
+    private Long id;
 
-    @Column(nullable = false, length = 255)
-    private String loginId;
+    @Column(nullable = false, unique = true)
+    private String userId;
 
-    @Column(nullable = false, length = 255)
+    @Column(nullable = false)
+    private String username;
+
+    @Column(nullable = false)
     private String password;
 
-    @Column(length = 255)
-    private String nickname;
+    @Column
+    private String phone;
 
-    @Column(length = 255)
-    private String userEmail;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Post> posts = new ArrayList<>();
 
-    @Column(nullable = false)
-    private String userGender; // enum 타입이지만, 여기서는 단순화를 위해 String 사용
-
-    @Column(nullable = false, length = 255)
-    private String userIntroduce;
-
-    @Column(nullable = false, length = 255)
-    private String userImage;
-
-    @Column(nullable = false)
-    private Timestamp userCreatedDate;
-
-    // 빌더 패턴
     @Builder
-    public User(String loginId, String password, String nickname, String userEmail, String userGender, String userIntroduce, String userImage, Timestamp userCreatedDate) {
-        this.loginId = loginId;
+    public User (String userId, String username, String phone, String password) {
+
+        this.userId = userId;
+        this.username = username;
+        this.phone = phone;
         this.password = password;
-        this.nickname = nickname;
-        this.userEmail = userEmail;
-        this.userGender = userGender;
-        this.userIntroduce = userIntroduce;
-        this.userImage = userImage;
-        this.userCreatedDate = userCreatedDate;
+
     }
 
-    // 편의 메서드
-    public void updateUserInfo(String password, String nickname, String userEmail, String userIntroduce, String userImage) {
-        if (password != null) this.password = password;
-        if (nickname != null) this.nickname = nickname;
-        if (userEmail != null) this.userEmail = userEmail;
-        if (userIntroduce != null) this.userIntroduce = userIntroduce;
-        if (userImage != null) this.userImage = userImage;
+    //편의 메서드
+    public void update(String userId, String username, String phone, String password) {
+        this.userId = userId;
+        this.username = username;
+        this.password = phone;
+        this.phone = password;
     }
+
+
 }
