@@ -15,7 +15,10 @@ public class PostController {
     private PostService postService;
 
     @GetMapping("/search")
-    public ResponseEntity<?> Search(@RequestParam(required = false) String title, @RequestParam(required = false) String content) {
+    public ResponseEntity<?> Search(
+            @RequestParam(required = false) String title,
+            @RequestParam(required = false) String content
+    ) {
         try {
             return ResponseEntity.ok(postService.search(title, content));
         }
@@ -48,7 +51,10 @@ public class PostController {
     }
 
     @PutMapping("/{postId}")
-    public ResponseEntity<?> update(@PathVariable Long postId, @RequestBody PostRequest postRequest){
+    public ResponseEntity<?> update(
+            @PathVariable Long postId,
+            @RequestBody PostRequest postRequest
+    ){
         try{
             return ResponseEntity.ok(postService.update(postId, postRequest));
         } catch (Exception e) {

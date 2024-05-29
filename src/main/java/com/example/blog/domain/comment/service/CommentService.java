@@ -30,9 +30,9 @@ public class CommentService {
      */
     public CommentResponse create(Long postId, CommentRequest commentRequest) {
         User user = userRepository.findById(commentRequest.userId())
-                .orElseThrow(() -> new IllegalArgumentException("게시글 업로드 불가 : 유저접근오류"));
+                .orElseThrow(() -> new IllegalArgumentException("댓글 작성 불가 : 유저 접근오류"));
         Post post = postRepository.findById(postId)
-                .orElseThrow(() -> new IllegalArgumentException("게시글 업로드 불가 : 유저접근오류"));
+                .orElseThrow(() -> new IllegalArgumentException("댓글 작성 불가 : 게시글 접근오류"));
         Comment comment = commentRequest.toEntity();
         comment.addAssociate(user, post);
         commentRepository.save(comment);
@@ -45,7 +45,7 @@ public class CommentService {
      */
     public List<CommentResponse> getAll(Long postId) {
         List<Comment> comments = commentRepository.findAllByPostId(postId)
-                .orElseThrow(() -> new IllegalArgumentException("접근 오류"));
+                .orElseThrow(() -> new IllegalArgumentException("댓글 접근 오류"));
 
         return comments.stream()
                 .map(CommentResponse::fromEntity)
@@ -60,7 +60,6 @@ public class CommentService {
     public CommentResponse get(Long postId, Long commentId) {
         Comment comment = commentRepository.findByPostIdAndId(postId, commentId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 댓글 없음"));
-
         return CommentResponse.fromEntity(comment);
     }
 

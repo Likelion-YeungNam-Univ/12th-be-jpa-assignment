@@ -23,7 +23,7 @@ public class LikeService {
      * */
     @Transactional
     public CommentResponse likeOrUnlike(Long postId, Long commentId) {
-        Comment comment = commentRepository.findByPostIdAndId(postId, commentId).orElseThrow(()-> new IllegalArgumentException("검색 오류"));
+        Comment comment = commentRepository.findByPostIdAndId(postId, commentId).orElseThrow(()-> new IllegalArgumentException("해당 댓글 없음"));
         Long userId = comment.getUser().getId();
         Likes likes = likeRepository.findByPostIdAndCommentIdAndUserId(postId, commentId, userId)
                 .orElse(null);

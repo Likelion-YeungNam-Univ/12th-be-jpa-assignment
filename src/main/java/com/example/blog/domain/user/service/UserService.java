@@ -5,15 +5,17 @@ import com.example.blog.domain.user.dto.UserRequest;
 import com.example.blog.domain.user.dto.UserResponse;
 import com.example.blog.domain.user.repository.UserRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-@AllArgsConstructor
+
 public class UserService {
-    private final UserRepository userRepository;
+    @Autowired
+    private UserRepository userRepository;
 
     /**
      * 모든 유저를 얻어온다.
