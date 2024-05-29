@@ -1,6 +1,7 @@
 package com.example.blog.domain.post.service;
 
 import com.example.blog.domain.post.domain.Post;
+import com.example.blog.domain.post.dto.PostReadResponseDto;
 import com.example.blog.domain.post.repository.PostRepository;
 import com.example.blog.domain.user.domain.User;
 import com.example.blog.domain.user.repository.UserRepository;
@@ -12,6 +13,17 @@ import org.springframework.stereotype.Service;
 public class PostService {
     private final PostRepository postRepository;
     private final UserRepository userRepository;
+
+    public Post findByPostId(Long postId){
+        return postRepository.findById(postId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 게시글 없음!"));
+    }
+
+    public PostReadResponseDto read(Long postId){
+        Post readPost = findByPostId(postId);
+        readPost.increaseViewCount();
+        return PostReadResponseDto.fromEntity(readPost);
+    }
 
     public Post createPost(Long userId, Post post) {
         User user = userRepository.findById(userId)
@@ -38,5 +50,4 @@ public class PostService {
         foundPost.update(post.getTitle(), post.getContent());
         return foundPost;
     }
-
 }
