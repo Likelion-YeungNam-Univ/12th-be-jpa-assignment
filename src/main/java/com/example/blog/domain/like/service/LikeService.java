@@ -20,9 +20,9 @@ public class LikeService {
     private final UserRepository userRepository;
     private final CommentRepository commentRepository;
 
-    /* 가게 좋아요 실행 메서드 */
+    /* 댓글 좋아요 실행 메서드 */
     @Transactional
-    public void likeRestaurant(Long userId, Long commentId) {
+    public void likeComment(Long userId, Long commentId) {
 
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
@@ -42,9 +42,9 @@ public class LikeService {
         likeRepository.save(like);
     }
 
-    /* 가게 좋아요 취소 메서드 */
+    /* 댓글 좋아요 취소 메서드 */
     @Transactional
-    public void unLikeRestaurant(Long userId, Long commentId) {
+    public void unLikeComment(Long userId, Long commentId) {
 
         Like like = likeRepository.findByUser_IdAndComment_Id(userId, commentId)
                 .orElseThrow(() -> new CustomException(ErrorCode.LIKE_NOT_FOUND));

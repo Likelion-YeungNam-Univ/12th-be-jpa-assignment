@@ -20,7 +20,7 @@ public class LikeController {
     @PostMapping("/{userId}/like/{commentId}")
     public ResponseEntity<String> likeRestaurant(@PathVariable Long userId, @PathVariable Long commentId) {
 
-        likeService.likeRestaurant(userId, commentId);
+        likeService.likeComment(userId, commentId);
         return ResponseEntity.ok("댓글 좋아요 증가.");
     }
 
@@ -28,7 +28,7 @@ public class LikeController {
     @DeleteMapping("/{userId}/like/{commentId}")
     public ResponseEntity<String> unLikeRestaurant(@PathVariable Long userId, @PathVariable Long commentId) {
 
-        likeService.unLikeRestaurant(userId, commentId);
+        likeService.unLikeComment(userId, commentId);
         return ResponseEntity.ok("댓글 좋아요 감소.");
     }
 }
