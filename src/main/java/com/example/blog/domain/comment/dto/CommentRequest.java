@@ -4,7 +4,6 @@ import com.example.blog.domain.comment.domain.Comment;
 
 public record CommentRequest(
         String content,
-        int likes,
         Long userId
 ) {
 

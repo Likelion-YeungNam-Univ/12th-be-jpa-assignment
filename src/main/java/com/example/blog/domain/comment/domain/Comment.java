@@ -25,7 +25,7 @@ public class Comment {
     private String content;
 
     @Column(name = "likes", nullable = false)
-    private int likes;
+    private int likes = 0;
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.EAGER)
@@ -44,7 +44,6 @@ public class Comment {
     @Builder
     public Comment(String content) {
         this.content = content;
-        this.likes = 0;
     }
 
     public void addAssociate(User user, Post post){

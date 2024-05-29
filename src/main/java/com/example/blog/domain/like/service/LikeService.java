@@ -22,13 +22,21 @@ public class LikeService {
         Likes likes = likeRepository.findByPostIdAndCommentIdAndUserId(postId, commentId, userId)
                 .orElse(null);
         if (likes == null) {
-            likeRepository.save(Likes.of(comment.getUser(), comment.getPost(), comment));
-            comment.like();
-            commentRepository.save(comment);
-            return CommentResponse.fromEntity(comment);
+            return like(comment);
         }
+        return unlike(comment, likes);
+    }
+
+    private CommentResponse unlike(Comment comment, Likes likes) {
         likeRepository.delete(likes);
         comment.unlike();
+        commentRepository.save(comment);
+        return CommentResponse.fromEntity(comment);
+    }
+
+    public CommentResponse like(Comment comment){
+        likeRepository.save(Likes.of(comment.getUser(), comment.getPost(), comment));
+        comment.like();
         commentRepository.save(comment);
         return CommentResponse.fromEntity(comment);
     }
