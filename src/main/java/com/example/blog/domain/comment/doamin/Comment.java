@@ -1,5 +1,6 @@
 package com.example.blog.domain.comment.doamin;
 
+import com.example.blog.domain.likes.domain.Likes;
 import com.example.blog.domain.post.domain.Post;
 import com.example.blog.domain.user.domain.User;
 import jakarta.persistence.*;
@@ -7,6 +8,9 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -24,7 +28,8 @@ public class Comment {
 
     private String content;
 
-    private int likeCount;
+    @OneToMany(mappedBy = "comment", cascade = CascadeType.ALL)
+    private List<Likes> likes = new ArrayList<>();
 
     @Builder
     public Comment(Post post, User user, String content) {
@@ -46,10 +51,7 @@ public class Comment {
         this.content = content;
     }
 
-    public void increaseLike(){
-        this.likeCount ++;
-    }
-    public void decreaseLike(){
-        this.likeCount --;
+    public void setLike(Likes likes){
+        this.getLikes().add(likes);
     }
 }

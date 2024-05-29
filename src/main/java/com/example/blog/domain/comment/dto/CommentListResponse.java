@@ -13,7 +13,7 @@ public record CommentListResponse(
                 comment.getId(),
                 comment.getUser().getId(),
                 comment.getContent(),
-                comment.getLikeCount()
+                comment.getLikes().size()
         );
     }
 }
