@@ -23,9 +23,14 @@ public class Post {
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     @JoinColumn(name = "user_id")
     private User user; // 작성자 필드
-
+    @Column(nullable = false)
     private String title;
+    @Column(nullable = false)
     private String content;
+
+    // 조회수 기능 추가
+    @Column(columnDefinition = "integer default 0", nullable = false)
+    private int view;
 
     @Builder
     public Post(String title, String content) {

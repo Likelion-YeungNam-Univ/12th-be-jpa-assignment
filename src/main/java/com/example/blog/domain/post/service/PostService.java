@@ -4,6 +4,7 @@ import com.example.blog.domain.post.domain.Post;
 import com.example.blog.domain.post.repository.PostRepository;
 import com.example.blog.domain.user.domain.User;
 import com.example.blog.domain.user.repository.UserRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -47,4 +48,10 @@ public class PostService {
         return postRepository.findAll();
     }
 
+
+    @Transactional
+    // 기능 추가 : 조회수 증가
+    public void updateView(Long id){
+        postRepository.updateView(id);
+    }
 }

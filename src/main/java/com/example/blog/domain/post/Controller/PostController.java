@@ -7,6 +7,7 @@ import com.example.blog.domain.post.dto.PostRes;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -30,6 +31,7 @@ public class PostController {
 
     @GetMapping("/{postId}")
     public ResponseEntity<?> getPost(@PathVariable Long postId) {
+        postService.updateView(postId); // 조회수 증가
         Post post = postService.getPost(postId);
         PostRes postRes = PostRes.fromEntity(post);
         return ResponseEntity.ok(postRes);
@@ -62,4 +64,5 @@ public class PostController {
         postService.deletePost(postId);
         return ResponseEntity.ok().build();
     }
+
 }
