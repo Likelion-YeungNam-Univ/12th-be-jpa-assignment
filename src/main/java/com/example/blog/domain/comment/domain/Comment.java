@@ -1,6 +1,6 @@
 package com.example.blog.domain.comment.domain;
 
-import com.example.blog.domain.like.domain.Like;
+import com.example.blog.domain.like.domain.Likes;
 import com.example.blog.domain.post.domain.Post;
 import com.example.blog.domain.user.domain.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -38,8 +38,8 @@ public class Comment {
     private Post post;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "comment", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<Like> like = new ArrayList<>();
+    @OneToMany(mappedBy = "comment", fetch = FetchType.EAGER)
+    private List<Likes> likeList = new ArrayList<>();
 
     @Builder
     public Comment(String content) {

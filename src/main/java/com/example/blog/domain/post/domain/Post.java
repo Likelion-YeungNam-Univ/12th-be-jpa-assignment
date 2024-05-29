@@ -1,7 +1,6 @@
 package com.example.blog.domain.post.domain;
 
 import com.example.blog.domain.comment.domain.Comment;
-import com.example.blog.domain.like.domain.Like;
 import com.example.blog.domain.user.domain.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
@@ -29,12 +28,8 @@ public class Post {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "post", fetch = FetchType.EAGER)
     private List<Comment> comments = new ArrayList<>();
-
-    @JsonIgnore
-    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<Like> likes = new ArrayList<>();
 
     @Builder
     public Post(String title, String content) {
