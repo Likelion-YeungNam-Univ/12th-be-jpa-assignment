@@ -1,5 +1,6 @@
 package com.example.blog.domain.user.domain;
 
+import com.example.blog.domain.comment.domain.Comment;
 import com.example.blog.domain.post.domain.Post;
 import jakarta.persistence.*;
 import lombok.Builder;
@@ -17,9 +18,6 @@ public class User{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, unique = true)
-    private String userId;
-
     @Column(nullable = false)
     private String username;
 
@@ -32,10 +30,12 @@ public class User{
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Post> posts = new ArrayList<>();
 
-    @Builder
-    public User (String userId, String username, String phone, String password) {
+    //private List<Comment> comments = new ArrayList<>();
 
-        this.userId = userId;
+    @Builder
+    public User ( String username, String phone, String password) {
+
+
         this.username = username;
         this.phone = phone;
         this.password = password;
@@ -43,8 +43,8 @@ public class User{
     }
 
     //편의 메서드
-    public void update(String userId, String username, String phone, String password) {
-        this.userId = userId;
+    public void update( String username, String phone, String password) {
+
         this.username = username;
         this.password = phone;
         this.phone = password;

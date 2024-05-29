@@ -6,6 +6,7 @@ import com.example.blog.domain.user.domain.User;
 import com.example.blog.domain.user.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -33,12 +34,13 @@ public class UserService {
         return userRepository.save(user);
     }
 
+    @Transactional
     public User updateUser(Long userId, UserReq request) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 유저 없음"));
 
         // 여기는 save 안해주나요??
-        user.update(request.username(), request.password(), request.userId(), request.phone());
+        user.update(request.username(), request.password(), request.phone());
 
         return user;
     }
