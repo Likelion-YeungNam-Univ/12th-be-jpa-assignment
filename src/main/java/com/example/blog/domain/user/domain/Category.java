@@ -10,7 +10,7 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-@NoArgsConstructor(access = AccessLevel.PROTECTED) // Default constructor access restriction
+@NoArgsConstructor(access = AccessLevel.PROTECTED) // Default constructor access restriction ddd
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
