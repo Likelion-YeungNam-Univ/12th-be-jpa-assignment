@@ -21,11 +21,13 @@ public class Post {
 
     private String title;
     private String content;
+    private int view;
 
     @Builder
-    public Post(String title, String content) {
+    public Post(String title, String content, int view) {
         this.title = title;
         this.content = content;
+        this.view=view;
     }
 
     // 편의 메서드
