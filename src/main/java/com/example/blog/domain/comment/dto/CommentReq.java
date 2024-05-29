@@ -9,7 +9,6 @@ public record CommentReq(
     public Comment toEntity() {
         return Comment.builder()
                 .content(content)
-                .likes(0)
                 .build();
     }
 }

@@ -1,10 +1,14 @@
 package com.example.blog.domain.comment.domain;
 
+import com.example.blog.domain.like.domain.CommentLike;
 import com.example.blog.domain.post.domain.Post;
 import com.example.blog.domain.user.domain.User;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Entity
@@ -26,14 +30,12 @@ public class Comment {
     private Post post;
 
     private String content;
-
-    @Setter
-    private int likes;
+//    @OneToMany(mappedBy = "comment", cascade = CascadeType.ALL, orphanRemoval = true)
+//    private List<CommentLike> likes = new ArrayList<>();
 
     @Builder
-    public Comment(String content, int likes) {
+    public Comment(String content) {
         this.content = content;
-        this.likes = likes;
     }
 
     public void update(String content) {
