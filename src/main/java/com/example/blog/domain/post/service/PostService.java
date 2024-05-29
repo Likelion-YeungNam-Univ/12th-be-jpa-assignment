@@ -6,6 +6,7 @@ import com.example.blog.domain.post.dto.PostReadResponseDto;
 import com.example.blog.domain.post.repository.PostRepository;
 import com.example.blog.domain.user.domain.User;
 import com.example.blog.domain.user.repository.UserRepository;
+import com.example.blog.domain.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +14,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class PostService {
     private final PostRepository postRepository;
-    private final UserRepository userRepository;
+    private final UserService userService;
 
     public Post findByPostId(Long postId){
         return postRepository.findById(postId)
@@ -27,8 +28,7 @@ public class PostService {
     }
 
     public Post create(PostRequestDto request) {
-        User user = userRepository.findById(request.userId())
-                .orElseThrow(() -> new IllegalArgumentException("해당 유저 없음!"));
+        User user = userService.findById(request.userId());
         Post createPost = request.toEntity(user);
         createPost.setUser(user);
         return postRepository.save(createPost);
@@ -42,8 +42,7 @@ public class PostService {
     }
 
     public void isWriter(Long userId, Post post){
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new IllegalArgumentException("해당 유저 없음!"));
+        User user = userService.findById(userId);
         if(!user.getId().equals(post.getUser().getId()))
             throw new IllegalArgumentException("해당 게시물의 작성자가 아닙니다.");
     }
