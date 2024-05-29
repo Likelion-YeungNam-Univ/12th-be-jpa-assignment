@@ -2,6 +2,7 @@ package com.example.blog.domain.user.service;
 
 import com.example.blog.domain.user.domain.User;
 import com.example.blog.domain.user.dto.UserCreateRequestDto;
+import com.example.blog.domain.user.dto.UserPasswordRequestDto;
 import com.example.blog.domain.user.dto.UserResponseDto;
 import com.example.blog.domain.user.dto.UserUpdateRequestDto;
 import com.example.blog.domain.user.repository.UserRepository;
@@ -40,22 +41,27 @@ public class UserService {
 
     @Transactional
     public User update(Long userId, UserUpdateRequestDto request) {
-        isOwner(userId, request.userId());
-
-        User foundUser = findById(userId);
+        User foundUser = ownerCheck(userId, request.userId());
         foundUser.update(request.email());
         return foundUser;
     }
 
     @Transactional
     public void delete(Long userId, UserUpdateRequestDto request) {
-        isOwner(userId, request.userId());
-
-        User foundUser = findById(userId);
+        User foundUser = ownerCheck(userId, request.userId());
         userRepository.delete(foundUser);
     }
 
-    public void isOwner(Long ownerId, Long currentId){
+    @Transactional
+    public User resetPassword(Long userId, UserPasswordRequestDto request) {
+        User foundUser = ownerCheck(userId, request.userId());
+        foundUser.resetPassword(request.password());
+        return foundUser;
+    }
+
+    @Transactional(readOnly = true)
+    public User ownerCheck(Long ownerId, Long currentId){
         if(!ownerId.equals(currentId)) throw new IllegalArgumentException("해당 계정의 주인이 아닙니다.");
+        return findById(ownerId);
     }
 }
