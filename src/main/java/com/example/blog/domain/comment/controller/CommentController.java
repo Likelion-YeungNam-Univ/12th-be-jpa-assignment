@@ -21,16 +21,16 @@ public class CommentController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> update(@PathVariable Long id,
+    public ResponseEntity<String> update(@PathVariable Long id,
                                     @RequestBody CommentUpdateRequest request){
-        Comment response = commentService.update(id, request);
-        return ResponseEntity.ok().body(response.getId());
+        commentService.update(id, request);
+        return ResponseEntity.ok().body("수정이 완료되었습니다.");
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> delete(@PathVariable Long id,
+    public ResponseEntity<String> delete(@PathVariable Long id,
                                     @RequestBody CommentUpdateRequest request){
         commentService.delete(id, request);
-        return ResponseEntity.ok().body("댓글 삭제가 완료되었습니다.");
+        return ResponseEntity.ok().body("삭제가 완료되었습니다.");
     }
 }
