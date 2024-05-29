@@ -8,6 +8,9 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
@@ -28,6 +31,18 @@ public class Comment {
     @Column(nullable = false)
     private String content;
 
+    // 댓글 좋아요 기능 추가
+    @Column(columnDefinition = "integer default 0", nullable = false)
+    private int likes;
+
+    @ManyToMany
+    @JoinTable(
+            name = "comment_likes",
+            joinColumns = @JoinColumn(name = "comment_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id")
+    )
+    private Set<User> likedUsers = new HashSet<>();
+
     @Builder
     public Comment(Post post, User user, String content) {
         this.post = post;
@@ -38,4 +53,22 @@ public class Comment {
     public void update(String content) {
         this.content = content;
     }
+
+
+    // 댓글 좋아요
+    public void like(User user) {
+        if (likedUsers.add(user)) {
+            this.likes++;
+        }
+    }
+
+    // 댓글 좋아요 취소
+    public void unlike(User user) {
+        if (likedUsers.remove(user)) {
+            this.likes--;
+        }
+    }
+
+
+
 }

@@ -59,4 +59,28 @@ public class CommentService {
         Comment comment = commentRepository.findById(commentId).orElseThrow(() -> new IllegalArgumentException("Invalid comment ID"));
         commentRepository.delete(comment);
     }
+
+    // 댓글 좋아요
+    @Transactional
+    public void likeComment(Long commentId, Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 유저 없음"));
+        Comment comment = commentRepository.findById(commentId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 댓글 없음"));
+
+        comment.like(user);
+        commentRepository.save(comment);
+    }
+
+    // 댓글 좋아요 취소
+    @Transactional
+    public void unlikeComment(Long commentId, Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 유저 없음"));
+        Comment comment = commentRepository.findById(commentId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 댓글 없음"));
+
+        comment.unlike(user);
+        commentRepository.save(comment);
+    }
 }
