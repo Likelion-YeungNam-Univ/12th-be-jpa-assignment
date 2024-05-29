@@ -4,9 +4,7 @@ import com.example.blog.domain.post.domain.Post;
 import com.example.blog.domain.post.dto.PostReq;
 import com.example.blog.domain.post.dto.PostRes;
 import com.example.blog.domain.post.service.PostService;
-import com.example.blog.domain.user.domain.User;
-import com.example.blog.domain.user.dto.UserReq;
-import com.example.blog.domain.user.dto.UserRes;
+
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -36,6 +34,8 @@ public class PostController {
     @GetMapping("/{id}")
     public ResponseEntity<?> getPost(@PathVariable Long id) {
         Post post = postService.getPost(id);
+        //조회수 증가
+        postService.updateView(id);
         PostRes postRes= PostRes.fromEntity(post);
         return ResponseEntity.ok(postRes);
     }

@@ -5,6 +5,7 @@ import com.example.blog.domain.post.dto.PostRes;
 import com.example.blog.domain.post.repository.PostRepository;
 import com.example.blog.domain.user.domain.User;
 import com.example.blog.domain.user.repository.UserRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -50,4 +51,8 @@ public class PostService {
         return foundPost;
     }
 
+    @Transactional
+    public int updateView(Long id) {
+        return postRepository.updateView(id);
+    }
 }
