@@ -4,12 +4,13 @@ import com.example.blog.domain.comment.domain.Comment;
 import com.example.blog.domain.user.domain.User;
 import jakarta.persistence.*;
 import lombok.Builder;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
 @NoArgsConstructor
-@Getter
+@Data
 public class Good {
 
     @Id
@@ -31,8 +32,9 @@ public class Good {
         this.likeCheck = likeCheck;
     }
 
-    public void updateLikeCheck(boolean likeCheck){
+
+
+    public void update(boolean likeCheck) {
         this.likeCheck = likeCheck;
     }
-
 }

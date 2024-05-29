@@ -44,7 +44,7 @@ public class CommentService {
                 .orElseThrow(() -> new IllegalArgumentException("해당 댓글 없음!"));
 
         foundComment.update(comment.getContent());
-        return foundComment;
+        return commentRepository.save(foundComment);
     }
 
 

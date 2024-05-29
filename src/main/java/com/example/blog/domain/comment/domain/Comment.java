@@ -42,4 +42,7 @@ public class Comment {
         this.content = content;
     }
 
+
+    public void setComment(Comment comment) {
+    }
 }
