@@ -48,10 +48,30 @@ public class PostService {
         return postRepository.findAll();
     }
 
-
-    @Transactional
     // 기능 추가 : 조회수 증가
+    @Transactional
     public void updateView(Long id){
         postRepository.updateView(id);
     }
+
+    // 기능 추가 : 게시판 검색
+
+    @Transactional
+    public List<Post> searchByTitle(String titleKeyword) {
+        return postRepository.findByTitle(titleKeyword);
+    }
+
+    @Transactional
+    public List<Post> searchByContent(String contentKeyword) {
+        return postRepository.findByContent(contentKeyword);
+    }
+
+    @Transactional
+    public List<Post> searchByUsername(String usernameKeyword) {
+        return postRepository.findByUserUsername(usernameKeyword);
+    }
+
+
+
+
 }

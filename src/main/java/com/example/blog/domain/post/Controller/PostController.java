@@ -64,5 +64,47 @@ public class PostController {
         postService.deletePost(postId);
         return ResponseEntity.ok().build();
     }
+    @RestController
+    public class SearchController {
+
+        // 검색 기능 : 제목
+        @GetMapping("/search/title")
+        public ResponseEntity<?> searchByTitle(@RequestParam String titleKeyword) {
+            List<Post> searchList = postService.searchByTitle(titleKeyword);
+            if (searchList.isEmpty()) {
+                return ResponseEntity.status(404).body("해당 게시물 없음!");
+            }
+            List<PostRes> postResponses = searchList.stream()
+                    .map(PostRes::fromEntity)
+                    .collect(Collectors.toList());
+            return ResponseEntity.ok(postResponses);
+        }
+
+        // 검색 기능 : 내용
+        @GetMapping("/search/content")
+        public ResponseEntity<?> searchByContent(@RequestParam String contentKeyword) {
+            List<Post> searchList = postService.searchByContent(contentKeyword);
+            if (searchList.isEmpty()) {
+                return ResponseEntity.status(404).body("해당 내용 없음!");
+            }
+            List<PostRes> postResponses = searchList.stream()
+                    .map(PostRes::fromEntity)
+                    .collect(Collectors.toList());
+            return ResponseEntity.ok(postResponses);
+        }
+
+        // 검색 기능 : 작성자
+        @GetMapping("/search/username")
+        public ResponseEntity<?> searchByUsername(@RequestParam String usernameKeyword) {
+            List<Post> searchList = postService.searchByUsername(usernameKeyword);
+            if (searchList.isEmpty()) {
+                return ResponseEntity.status(404).body("해당 작성자 없음!");
+            }
+            List<PostRes> postResponses = searchList.stream()
+                    .map(PostRes::fromEntity)
+                    .collect(Collectors.toList());
+            return ResponseEntity.ok(postResponses);
+        }
+    }
 
 }
