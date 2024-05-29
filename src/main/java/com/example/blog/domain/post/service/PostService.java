@@ -1,6 +1,7 @@
 package com.example.blog.domain.post.service;
 
 import com.example.blog.domain.post.domain.Post;
+import com.example.blog.domain.post.dto.PostCreateRequestDto;
 import com.example.blog.domain.post.dto.PostReadResponseDto;
 import com.example.blog.domain.post.repository.PostRepository;
 import com.example.blog.domain.user.domain.User;
@@ -25,12 +26,12 @@ public class PostService {
         return PostReadResponseDto.fromEntity(readPost);
     }
 
-    public Post createPost(Long userId, Post post) {
+    public Post create(Long userId, PostCreateRequestDto request) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 유저 없음!"));
-
-        post.setUser(user);
-        return postRepository.save(post);
+        Post createPost = request.toEntity(user);
+        createPost.setUser(user);
+        return postRepository.save(createPost);
     }
 
     public Post getPost(Long postId) {

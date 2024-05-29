@@ -28,7 +28,8 @@ public class Post {
     private int viewCount;
 
     @Builder
-    public Post(String title, String content, int viewCount) {
+    public Post(User user, String title, String content, int viewCount) {
+        this.user = user;
         this.title = title;
         this.content = content;
         this.viewCount = viewCount;
