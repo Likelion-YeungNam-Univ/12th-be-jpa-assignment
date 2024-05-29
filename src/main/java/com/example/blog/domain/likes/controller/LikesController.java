@@ -8,20 +8,24 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/likes")
+@RequestMapping("/post")
 @RequiredArgsConstructor
 public class LikesController {
     private final LikesService likesService;
 
-    @PostMapping("")
-    public ResponseEntity<String> create(@RequestBody LikeRequest request){
-        Likes response = likesService.create(request);
+    @PostMapping("/{postId}/comment/{commentId}/likes")
+    public ResponseEntity<String> create(@PathVariable Long postId,
+                                         @PathVariable Long commentId,
+                                         @RequestBody LikeRequest request){
+        Likes response = likesService.create(commentId, request);
         return ResponseEntity.ok().body("좋아요가 생성되었습니다.");
     }
 
-    @DeleteMapping("")
-    public ResponseEntity<String> delete(@RequestBody LikeRequest request){
-        likesService.delete(request);
+    @DeleteMapping("/{postId}/comment/{commentId}/likes")
+    public ResponseEntity<String> delete(@PathVariable Long postId,
+                                         @PathVariable Long commentId,
+                                         @RequestBody LikeRequest request){
+        likesService.delete(commentId, request);
         return ResponseEntity.ok().body("좋아요가 취소되었습니다.");
     }
 }

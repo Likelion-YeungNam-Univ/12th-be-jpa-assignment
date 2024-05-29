@@ -27,25 +27,25 @@ public class LikesService {
     }
 
     @Transactional
-    public Likes create(LikeRequest request){
+    public Likes create(Long commentId, LikeRequest request){
         log.info("좋아요 생성");
         User user = userService.findById(request.userId());
-        Comment comment = commentService.findById(request.commentId());
+        Comment comment = commentService.findById(commentId);
         log.info("UPDATE : Comment");
-        comment.increaseLike();
         Likes likes = request.toEntity(user, comment);
+        likes.setUser(user);
+//        likes.setComment(comment);
         log.info("INSERT : Like");
         return likesRepository.save(likes);
     }
 
     @Transactional
-    public void delete(LikeRequest request){
+    public void delete(Long commentId, LikeRequest request){
         log.info("좋아요 삭제");
         User user = userService.findById(request.userId());
-        Comment comment = commentService.findById(request.commentId());
+        Comment comment = commentService.findById(commentId);
         Likes foundLikes = findByUserAndComment(user, comment);
         log.info("UPDATE : Comment");
-        comment.decreaseLike();
         likesRepository.delete(foundLikes);
         log.info("DELETE : Like");
     }

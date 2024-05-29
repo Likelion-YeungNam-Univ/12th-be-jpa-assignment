@@ -24,4 +24,13 @@ public class Likes {
         this.user = user;
         this.comment = comment;
     }
+
+    public void setUser(User user) {
+        this.user = user;
+        user.getLikes().add(this);
+    }
+    public void setComment(Comment comment) {
+        this.comment = comment;
+        comment.getLikes().add(this);
+    }
 }
