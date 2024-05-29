@@ -3,10 +3,10 @@ package com.example.blog.domain.post.dto;
 import com.example.blog.domain.post.domain.Post;
 
 public record PostRes(
-        String username,
-        Long id,
         String writer,
+        Long id,
         String title,
+        String content,
         int view
 ) {
     public static PostRes fromEntity(Post post) {
