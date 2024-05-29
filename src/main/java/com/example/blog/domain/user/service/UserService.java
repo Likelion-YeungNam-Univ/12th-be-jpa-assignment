@@ -4,7 +4,6 @@ import com.example.blog.domain.user.domain.User;
 import com.example.blog.domain.user.dto.UserRequest;
 import com.example.blog.domain.user.dto.UserResponse;
 import com.example.blog.domain.user.repository.UserRepository;
-import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
