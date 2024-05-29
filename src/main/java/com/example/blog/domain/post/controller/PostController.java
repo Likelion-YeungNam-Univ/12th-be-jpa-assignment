@@ -63,8 +63,6 @@ public class PostController {
         if (posts.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
-        // 조회수 증가
-        posts.forEach(post -> postService.updateView(post.getId()));
 
         List<PostRes> postResList = posts.stream()
                 .map(PostRes::fromEntity)
