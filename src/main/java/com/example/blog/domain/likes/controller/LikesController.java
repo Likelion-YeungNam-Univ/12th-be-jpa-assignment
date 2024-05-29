@@ -14,9 +14,9 @@ public class LikesController {
     private final LikesService likesService;
 
     @PostMapping("")
-    public ResponseEntity<Long> create(@RequestBody LikeRequest request){
-        Likes likes = likesService.create(request);
-        return ResponseEntity.ok().body(likes.getId());
+    public ResponseEntity<String> create(@RequestBody LikeRequest request){
+        Likes response = likesService.create(request);
+        return ResponseEntity.ok().body("좋아요가 생성되었습니다.");
     }
 
     @DeleteMapping("")
