@@ -4,8 +4,11 @@ import com.example.blog.domain.post.domain.Post;
 import com.example.blog.domain.post.repository.PostRepository;
 import com.example.blog.domain.user.domain.User;
 import com.example.blog.domain.user.repository.UserRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -36,7 +39,39 @@ public class PostService {
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시글 없음!"));
 
         foundPost.update(post.getTitle(), post.getContent());
-        return foundPost;
+        return postRepository.save(foundPost);
     }
+
+
+    // getAllPosts
+    public List<Post> getAllPosts() {
+        return postRepository.findAll();
+    }
+
+    // 기능 추가 : 조회수 증가
+    @Transactional
+    public void updateView(Long id){
+        postRepository.updateView(id);
+    }
+
+    // 기능 추가 : 게시판 검색
+
+    @Transactional
+    public List<Post> searchByTitle(String titleKeyword) {
+        return postRepository.findByTitle(titleKeyword);
+    }
+
+    @Transactional
+    public List<Post> searchByContent(String contentKeyword) {
+        return postRepository.findByContent(contentKeyword);
+    }
+
+    @Transactional
+    public List<Post> searchByUsername(String usernameKeyword) {
+        return postRepository.findByUserUsername(usernameKeyword);
+    }
+
+
+
 
 }
