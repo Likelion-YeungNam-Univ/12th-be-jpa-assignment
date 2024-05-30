@@ -1,5 +1,6 @@
 package com.example.blog.domain.user.service;
 
+import ch.qos.logback.classic.encoder.JsonEncoder;
 import com.example.blog.domain.user.domain.User;
 import com.example.blog.domain.user.dto.UserReq;
 import com.example.blog.domain.user.dto.UserRes;
@@ -46,4 +47,11 @@ public class UserService {
     public void deleteUser(Long userId) {
         userRepository.deleteById(userId);
     }
+
+    public void resetPassword(Long userId, String newPassword) {
+        User user = getUser(userId);
+        user.resetPassword(newPassword);
+        userRepository.save(user);
+    }
+
 }

@@ -1,6 +1,7 @@
 package com.example.blog.domain.user.controller;
 
 import com.example.blog.domain.user.domain.User;
+import com.example.blog.domain.user.dto.ResetPasswordReq;
 import com.example.blog.domain.user.dto.UserReq;
 import com.example.blog.domain.user.dto.UserRes;
 import com.example.blog.domain.user.service.UserService;
@@ -48,6 +49,11 @@ public class UserController {
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteUser(@PathVariable Long userId){
         userService.deleteUser(userId);
+        return ResponseEntity.ok().build();
+    }
+    @PatchMapping("/{id}/reset-password")
+    public ResponseEntity<?> resetPassword(@PathVariable Long id, @RequestBody ResetPasswordReq resetPasswordReq) {
+        userService.resetPassword(id, resetPasswordReq.getNewPassword());
         return ResponseEntity.ok().build();
     }
 

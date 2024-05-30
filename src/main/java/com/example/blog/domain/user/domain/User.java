@@ -17,6 +17,7 @@ public class User{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String username;
     private String email;
     private String password;
@@ -36,5 +37,9 @@ public class User{
     public void update(String username, String password) {
         this.username = username;
         this.password = password;
+    }
+
+    public void resetPassword(String newPassword) {
+        this.password = newPassword;
     }
 }
