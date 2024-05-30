@@ -2,21 +2,15 @@ package com.example.blog.domain.like.service;
 
 import com.example.blog.domain.blog.domain.Blog;
 import com.example.blog.domain.blog.repository.BlogRepository;
-import com.example.blog.domain.blog.service.BlogService;
 import com.example.blog.domain.board.domain.Board;
 import com.example.blog.domain.board.repository.BoardRepository;
-import com.example.blog.domain.board.service.BoardService;
 import com.example.blog.domain.comment.domain.Comment;
 import com.example.blog.domain.comment.repository.CommentRepository;
-import com.example.blog.domain.comment.service.CommentService;
 import com.example.blog.domain.like.domain.Like;
-import com.example.blog.domain.like.repository.LikeRepository;
 import com.example.blog.domain.user.domain.User;
 import com.example.blog.domain.user.repository.UserRepository;
-import com.example.blog.domain.user.service.UserService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
@@ -30,34 +24,16 @@ import static org.mockito.Mockito.when;
 class LikeServiceTest {
 
     @MockBean
-    private UserService userService;
-
-    @MockBean
     private UserRepository userRepository;
-
-    @MockBean
-    private BlogService blogService;
 
     @MockBean
     private BlogRepository blogRepository;
 
     @MockBean
-    private BoardService boardService;
-
-    @MockBean
     private BoardRepository boardRepository;
 
     @MockBean
-    private CommentService commentService;
-
-    @MockBean
     private CommentRepository commentRepository;
-
-    @MockBean
-    private LikeRepository likeRepository;
-
-    @Autowired
-    private LikeService likeService;
 
     @Test
     @DisplayName("댓글 좋아요 추가 테스트")
