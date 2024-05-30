@@ -1,6 +1,9 @@
 package com.example.blog.domain.user.domain;
 
+import com.example.blog.domain.comment.domain.Comment;
+import com.example.blog.domain.like.domain.Likes;
 import com.example.blog.domain.post.domain.Post;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -17,12 +20,27 @@ public class User{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(name = "username", nullable = false)
     private String username;
-    private String email;
+
+    @Column(name = "password", nullable = false)
     private String password;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @Column(name = "email", nullable = false)
+    private String email;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "user",  fetch = FetchType.EAGER)
     private List<Post> posts = new ArrayList<>();
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "user",  fetch = FetchType.EAGER)
+    private List<Comment> comments = new ArrayList<>();
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "user",  fetch = FetchType.EAGER)
+    private List<Likes> likes = new ArrayList<>();
 
     // 빌더 패턴
     @Builder
@@ -32,9 +50,11 @@ public class User{
         this.password = password;
     }
 
-    //편의 메서드
-    public void update(String username, String password) {
-        this.username = username;
+    /**
+     비밀번호를 변경한다.
+     @param password 비밀번호
+     */
+    public void updatePwd(String password) {
         this.password = password;
     }
 }

@@ -1,10 +1,13 @@
 spring:
 
   jpa:
-    hibernate:
-      ddl-auto: create
+    open-in-view: false
     show-sql: true
-    defer-datasource-initialization: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+    hibernate:
+      ddl-auto: update
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
