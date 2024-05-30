@@ -1,5 +1,7 @@
 package com.example.blog.domain.like.service;
 
+import com.example.blog.domain.board.domain.Board;
+import com.example.blog.domain.board.repository.BoardRepository;
 import com.example.blog.domain.comment.domain.Comment;
 import com.example.blog.domain.comment.repository.CommentRepository;
 import com.example.blog.domain.like.domain.Like;
@@ -17,12 +19,17 @@ public class LikeService {
 
     private final LikeRepository likeRepository;
     private final UserRepository userRepository;
+    private final BoardRepository boardRepository;
     private final CommentRepository commentRepository;
 
-    public void clickedLike(String userNickname, Long commentId) {
+    public void clickedLike(String userNickname, String boardTitle, Long commentId) {
         User user = userRepository.findByNickname(userNickname)
                 .orElseThrow(() -> new IllegalStateException("user does not exist"));
 
+        Board board = boardRepository.findByTitle(boardTitle)
+                .orElseThrow(() -> new IllegalStateException("board does not exist"));
+
+//        Comment comment = board.getBoardComments().get(0);
         Comment comment = commentRepository.findById(commentId)
                 .orElseThrow(() -> new IllegalStateException("comment does not exist"));
 
@@ -31,6 +38,7 @@ public class LikeService {
                 .comment(comment)
                 .build();
 
+        board.getBoardComments().get(0).getLikes().add(like);
         user.addLike(like);
         comment.addLike(like);
 
