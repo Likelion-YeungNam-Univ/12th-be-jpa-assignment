@@ -22,6 +22,9 @@ public class Post {
     private String title;
     private String content;
 
+    // 조회수
+    private int viewCount = 0;
+
     @Builder
     public Post(String title, String content) {
         this.title = title;
@@ -32,6 +35,11 @@ public class Post {
     public void update(String title, String content) {
         this.title = title;
         this.content = content;
+    }
+
+    // 조회수 증가 메서드
+    public void increaseViewCount() {
+        this.viewCount++;
     }
 
     // 연관관계 편의 메서드
