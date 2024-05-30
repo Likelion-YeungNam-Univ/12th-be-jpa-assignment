@@ -4,7 +4,6 @@ import com.example.blog.domain.comment.domain.Comment;
 import com.example.blog.domain.comment.dto.CommentReq;
 import com.example.blog.domain.comment.dto.CommentRes;
 import com.example.blog.domain.comment.service.CommentService;
-import com.example.blog.domain.user.service.UserService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;

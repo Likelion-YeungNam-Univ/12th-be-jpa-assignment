@@ -5,14 +5,11 @@ import com.example.blog.domain.comment.dto.CommentReq;
 import com.example.blog.domain.comment.dto.CommentRes;
 import com.example.blog.domain.comment.repository.CommentRepository;
 import com.example.blog.domain.post.domain.Post;
-import com.example.blog.domain.post.dto.PostRes;
 import com.example.blog.domain.post.repository.PostRepository;
 import com.example.blog.domain.user.domain.User;
 import com.example.blog.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.Collections;
 import java.util.List;

@@ -1,15 +1,10 @@
 package com.example.blog.domain.comment.domain;
 
-import com.example.blog.domain.like.domain.CommentLike;
 import com.example.blog.domain.post.domain.Post;
 import com.example.blog.domain.user.domain.User;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
-
-import java.util.ArrayList;
-import java.util.List;
-
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
