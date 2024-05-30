@@ -9,6 +9,7 @@ import com.example.blog.domain.comment.repository.CommentRepository;
 import com.example.blog.domain.like.domain.Like;
 import com.example.blog.domain.user.domain.User;
 import com.example.blog.domain.user.repository.UserRepository;
+import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -37,6 +38,7 @@ class LikeServiceTest {
 
     @Test
     @DisplayName("댓글 좋아요 추가 테스트")
+    @Transactional
     void 좋아요_추가_테스트() {
         User user = User.builder()
                 .email("test@test1.com")
@@ -89,6 +91,7 @@ class LikeServiceTest {
 
     @Test
     @DisplayName("좋아요_취소_테스트")
+    @Transactional
     void 좋아요_취소() {
         User user = User.builder()
                 .email("test@test1.com")

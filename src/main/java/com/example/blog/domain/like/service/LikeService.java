@@ -8,6 +8,7 @@ import com.example.blog.domain.like.domain.Like;
 import com.example.blog.domain.like.repository.LikeRepository;
 import com.example.blog.domain.user.domain.User;
 import com.example.blog.domain.user.repository.UserRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +23,7 @@ public class LikeService {
     private final BoardRepository boardRepository;
     private final CommentRepository commentRepository;
 
+    @Transactional
     public void clickedLike(String userNickname, String boardTitle, Long commentId) {
         User user = userRepository.findByNickname(userNickname)
                 .orElseThrow(() -> new IllegalStateException("user does not exist"));
@@ -46,6 +48,7 @@ public class LikeService {
         likeRepository.save(like);
     }
 
+    @Transactional
     public void removeLike(String userNickname, Long commentId) {
         User user = userRepository.findByNickname(userNickname)
                 .orElseThrow(() -> new IllegalStateException("user does not exist"));

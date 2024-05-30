@@ -4,6 +4,7 @@ import com.example.blog.domain.blog.domain.Blog;
 import com.example.blog.domain.blog.repository.BlogRepository;
 import com.example.blog.domain.board.domain.Board;
 import com.example.blog.domain.board.repository.BoardRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +27,7 @@ public class BoardService {
 //    }
 
     // blog 이름으로 블로그 게시글 삭제
+    @Transactional
     public Board createBoard(String name, Board board) {
         Blog blog = blogRepository.findByName(name)
                 .orElseThrow(() -> new IllegalStateException("blog does not exist"));
@@ -36,6 +38,7 @@ public class BoardService {
         return boardRepository.save(board);
     }
 
+    @Transactional
     public Board getBoard(Long boardId) {
         Board board = boardRepository.findById(boardId)
                 .orElseThrow(() -> new IllegalStateException("board does not exist"));
@@ -53,6 +56,7 @@ public class BoardService {
 //        return newBoard;
 //    }
 
+    @Transactional
     public void updateBoard(String title, Board updatedBoard) {
         Board prevBoard = boardRepository.findByTitle(title)
                 .orElseThrow(() -> new IllegalStateException("board does not exist"));
@@ -82,6 +86,7 @@ public class BoardService {
 //    }
 
     // board Title로 삭제
+    @Transactional
     public void deleteBoard(String title) {
         Board board = boardRepository.findByTitle(title)
                 .orElseThrow(() -> new IllegalStateException("board does not exist"));
@@ -102,6 +107,7 @@ public class BoardService {
 //        board.increaseView();
 //    }
 
+    @Transactional
     public void readBoard(String name) {
         Board board = boardRepository.findByTitle(name)
                 .orElseThrow(() -> new IllegalStateException("board does not exist"));

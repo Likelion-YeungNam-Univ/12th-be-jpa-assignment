@@ -6,6 +6,7 @@ import com.example.blog.domain.blog.service.BlogService;
 import com.example.blog.domain.board.domain.Board;
 import com.example.blog.domain.board.repository.BoardRepository;
 import com.example.blog.domain.user.domain.User;
+import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +37,7 @@ class BoardServiceTest {
 
     @Test
     @DisplayName("Board Service - 게시글 생성 테스트 ")
+    @Transactional
     void 게시글_생성_성공() {
         // given
         Board board = Board.builder()
@@ -72,6 +74,7 @@ class BoardServiceTest {
 
     @Test
     @DisplayName("Board Service - 게시글 삭제 테스트 ")
+    @Transactional
     void 게시글_삭제_성공() {
         // given
         Board board = Board.builder()
@@ -110,6 +113,7 @@ class BoardServiceTest {
 
     @Test
     @DisplayName("Board Service - 게시글 수정 테스트")
+    @Transactional
     void 게시글_수정_성공() {
         // given
         Board board = Board.builder()
@@ -156,6 +160,7 @@ class BoardServiceTest {
 
     @Test
     @DisplayName("Board Service - 게시글 조회수 증가 테스트")
+    @Transactional
     void 조회수_증가() {
         // given
         // 게시글 조회 시 조회수를 1증가 시킴

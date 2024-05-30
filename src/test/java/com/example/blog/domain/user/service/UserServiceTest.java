@@ -2,6 +2,7 @@ package com.example.blog.domain.user.service;
 
 import com.example.blog.domain.user.domain.User;
 import com.example.blog.domain.user.repository.UserRepository;
+import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -30,6 +31,7 @@ class UserServiceTest {
 
     @Test
     @DisplayName("유저 생성 테스트 - 성공")
+    @Transactional
     void 유저_가입_성공() {
         // given
         User user = User.builder()
@@ -51,6 +53,7 @@ class UserServiceTest {
 
     @Test
     @DisplayName("유저 생성 테스트(이메일 중복 예외) - 실패")
+    @Transactional
     void 이메일중복_가입_실패() {
         // given
         User user = User.builder()
@@ -81,6 +84,7 @@ class UserServiceTest {
 
     @Test
     @DisplayName("유저 생성 테스트(닉네임 중복 예외) - 실패")
+    @Transactional
     void 닉네임중복_가입_실패() {
         // given
         User user = User.builder()
@@ -110,6 +114,8 @@ class UserServiceTest {
     }
 
     @Test
+    @DisplayName("비밀번호 변경 테스트")
+    @Transactional
     void 비밀번호_변경_성공() {
         // given
         User user = User.builder()
@@ -132,6 +138,7 @@ class UserServiceTest {
 
     @Test
     @DisplayName("비밀번호 변경 - 기존의 비밀번호가 입력된 경우의 실패 처리")
+    @Transactional
     void 기존_비밀번호_변경_실패() {
 
         // given
@@ -158,6 +165,7 @@ class UserServiceTest {
 
     @Test
     @DisplayName("비밀번호 변경 - 존재하는 유저가 아닌 경우")
+    @Transactional
     void 유저_찾지못함_비밀번호_변경_실패() {
 
         // given

@@ -6,6 +6,7 @@ import com.example.blog.domain.comment.domain.Comment;
 import com.example.blog.domain.comment.repository.CommentRepository;
 import com.example.blog.domain.user.domain.User;
 import com.example.blog.domain.user.repository.UserRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -33,6 +34,7 @@ public class CommentService {
 //        commentRepository.save(comment);
 //    }
 
+    @Transactional
     public void createComment(String nickname, String boardTitle, Comment comment) {
         User user = userRepository.findByNickname(nickname)
                 .orElseThrow(() -> new IllegalStateException("user does not exist."));
@@ -59,6 +61,7 @@ public class CommentService {
 //        board.getBoardComments().remove(comment);
 //    }
 
+    @Transactional
     public void deleteComment(String nickname, String boardTitle, Comment comment) {
         User user = userRepository.findByNickname(nickname)
                 .orElseThrow(() -> new IllegalStateException("user does not exist."));
@@ -88,6 +91,7 @@ public class CommentService {
 //        board.getBoardComments().remove(comment);
 //    }
 
+    @Transactional
     public void updateComment(String nickname, String boardTitle, Long prevCommentId, Comment newComment) {
         User user = userRepository.findByNickname(nickname)
                 .orElseThrow(() -> new IllegalStateException("user does not exist."));
@@ -116,6 +120,7 @@ public class CommentService {
         commentRepository.save(prevComment);
     }
 
+    @Transactional
     public List<Comment> getComments(String boardTitle) {
         Board board = boardRepository.findByTitle(boardTitle)
                 .orElseThrow(() -> new IllegalStateException("board does not exist"));

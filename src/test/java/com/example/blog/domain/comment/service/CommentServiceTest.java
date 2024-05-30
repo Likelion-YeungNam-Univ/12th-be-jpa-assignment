@@ -11,6 +11,7 @@ import com.example.blog.domain.comment.repository.CommentRepository;
 import com.example.blog.domain.user.domain.User;
 import com.example.blog.domain.user.repository.UserRepository;
 import com.example.blog.domain.user.service.UserService;
+import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,6 +54,7 @@ class CommentServiceTest {
 
     @Test
     @DisplayName("댓글 생성 테스트")
+    @Transactional
     void 댓글_생성_성공() {
         // given
         User user = User.builder()
@@ -97,6 +99,7 @@ class CommentServiceTest {
 
     @Test
     @DisplayName("댓글 삭제 테스트")
+    @Transactional
     void 댓글_삭제_테스트() {
         // given
         User user = User.builder()
@@ -144,6 +147,7 @@ class CommentServiceTest {
 
     @Test
     @DisplayName("댓글 수정 테스트")
+    @Transactional
     void 댓글_수정_테스트() {
         // given
         User user = User.builder()
@@ -194,6 +198,7 @@ class CommentServiceTest {
 
     @Test
     @DisplayName("댓글 조회 테스트")
+    @Transactional
     void 댓글_조회_테스트() {
         // given
         User user = User.builder()

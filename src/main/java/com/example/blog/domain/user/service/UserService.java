@@ -2,6 +2,7 @@ package com.example.blog.domain.user.service;
 
 import com.example.blog.domain.user.domain.User;
 import com.example.blog.domain.user.repository.UserRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,6 +33,7 @@ public class UserService {
     }
 
     // 유저 생성
+    @Transactional
     public void userSignUp(User user) {
         // 중복 확인
         validateDuplicateEmail(user.getEmail());
@@ -40,6 +42,7 @@ public class UserService {
         userRepository.save(user);
     }
 
+    @Transactional
     // 비밀번호 변경
     public void changePassword(String nickname, String newPassword) {
         Optional<User> checkUser = userRepository.findByNickname(nickname);
