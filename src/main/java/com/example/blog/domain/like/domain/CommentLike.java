@@ -29,4 +29,7 @@ public class CommentLike {
     }
 
 
+    public void setComment(Comment comment) {
+        this.comment=comment;
+    }
 }

@@ -5,6 +5,7 @@ import com.example.blog.domain.user.domain.User;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -25,8 +26,8 @@ public class Comment {
     private Post post;
 
     private String content;
-//    @OneToMany(mappedBy = "comment", cascade = CascadeType.ALL, orphanRemoval = true)
-//    private List<CommentLike> likes = new ArrayList<>();
+
+    private int likeCnt=0;
 
     @Builder
     public Comment(String content) {
@@ -43,5 +44,9 @@ public class Comment {
 
     public void setPost(Post post) {
         this.post = post;
+    }
+
+    public void setLikeCnt(int likeCnt) {
+        this.likeCnt=likeCnt;
     }
 }

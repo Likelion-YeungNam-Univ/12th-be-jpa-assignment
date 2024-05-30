@@ -32,10 +32,19 @@ public class LikeService {
         if(likes.isPresent()){
             //이미 좋아요함 -> 취소
             LikeRepository.delete(likes.get());
+            comment.setLikeCnt(comment.getLikeCnt() - 1);
+            commentRepository.save(comment);
+
         }
         else{
             CommentLike commentLike = new CommentLike(user, comment);
             LikeRepository.save(commentLike);
+
+            commentLike.setComment(comment);
+            LikeRepository.save(commentLike);
+
+            comment.setLikeCnt(comment.getLikeCnt() + 1);
+            commentRepository.save(comment);
         }
     }
 
