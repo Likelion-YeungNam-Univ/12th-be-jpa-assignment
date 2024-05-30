@@ -1,5 +1,7 @@
 package com.example.blog.domain.user.domain;
 
+import com.example.blog.domain.comment.doamin.Comment;
+import com.example.blog.domain.likes.domain.Likes;
 import com.example.blog.domain.post.domain.Post;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -8,7 +10,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -24,6 +28,12 @@ public class User{
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Post> posts = new ArrayList<>();
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Comment> comments = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private Set<Likes> likes = new HashSet<>();
+
     // 빌더 패턴
     @Builder
     public User(String username, String email, String password) {
@@ -33,8 +43,11 @@ public class User{
     }
 
     //편의 메서드
-    public void update(String username, String password) {
-        this.username = username;
+    public void update(String email) {
+        this.email = email;
+    }
+
+    public void resetPassword(String password) {
         this.password = password;
     }
 }
