@@ -54,4 +54,18 @@ public class CommentService {
     public void deleteComment(Long commentId) {
         commentRepository.deleteById(commentId);
     }
+
+    public Comment likeComment(Long commentId) {
+        Comment comment = commentRepository.findById(commentId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 댓글 없음!"));
+        comment.increaseLikeCount();
+        return commentRepository.save(comment);
+    }
+
+    public Comment unlikeComment(Long commentId) {
+        Comment comment = commentRepository.findById(commentId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 댓글 없음!"));
+        comment.decreaseLikeCount();
+        return commentRepository.save(comment);
+    }
 }
