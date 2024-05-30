@@ -18,8 +18,7 @@ public class LikeController {
     @PostMapping("/{postId}/{commentId}")
     public ResponseEntity<?> Like(@PathVariable Long postId, @PathVariable Long commentId) {
         try {
-            CommentResponse commentResponse = likeService.likeOrUnlike(postId, commentId);
-            return ResponseEntity.ok(commentResponse);
+            return ResponseEntity.ok(likeService.likeOrUnlike(postId, commentId));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }

@@ -18,15 +18,13 @@ public class CommentController {
 
     @GetMapping("/{postId}")
     public ResponseEntity<?> getAll(@PathVariable Long postId) {
-        List<CommentResponse> comments = commentService.getAll(postId);
-        return ResponseEntity.ok(comments);
+        return ResponseEntity.ok(commentService.getAll(postId));
     }
 
     @PostMapping("/{postId}")
     public ResponseEntity<?> create(@PathVariable Long postId, @RequestBody CommentRequest commentRequest){
         try {
-            CommentResponse commentResponse= commentService.create(postId, commentRequest);
-            return ResponseEntity.ok(commentResponse);
+            return ResponseEntity.ok(commentService.create(postId, commentRequest));
         } catch (Exception e){
             return ResponseEntity.badRequest().body(e.getMessage());
         }
@@ -35,8 +33,7 @@ public class CommentController {
     @GetMapping("/{postId}/{commentId}")
     public ResponseEntity<?> get(@PathVariable Long postId, @PathVariable Long commentId){
         try {
-            CommentResponse commentResponse = commentService.get(postId, commentId);
-            return ResponseEntity.ok(commentResponse);
+            return ResponseEntity.ok(commentService.get(postId, commentId));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
@@ -45,8 +42,7 @@ public class CommentController {
     @PutMapping("/{postId}/{commentId}")
     public ResponseEntity<?> update(@PathVariable Long postId, @PathVariable Long commentId,@RequestBody CommentRequest commentRequest){
         try{
-            CommentResponse commentResponse = commentService.update(postId, commentId, commentRequest);
-            return ResponseEntity.ok(commentResponse);
+            return ResponseEntity.ok(commentService.update(postId, commentId, commentRequest));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
