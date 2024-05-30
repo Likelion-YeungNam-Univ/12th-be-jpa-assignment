@@ -5,15 +5,15 @@ import com.example.blog.domain.post.domain.Post;
 
 import java.util.List;
 
-public record PostReadResponseDto(
+public record PostResponse(
         String username,
         String title,
         String content,
         int viewCount,
         List<CommentListResponse> comments
 ) {
-    public static PostReadResponseDto fromEntity(Post post){
-        return new PostReadResponseDto(
+    public static PostResponse fromEntity(Post post){
+        return new PostResponse(
                 post.getUser().getUsername(),
                 post.getTitle(),
                 post.getContent(),

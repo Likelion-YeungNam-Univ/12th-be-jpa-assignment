@@ -1,10 +1,10 @@
 package com.example.blog.domain.user.service;
 
 import com.example.blog.domain.user.domain.User;
-import com.example.blog.domain.user.dto.UserCreateRequestDto;
-import com.example.blog.domain.user.dto.UserPasswordRequestDto;
+import com.example.blog.domain.user.dto.UserCreateRequest;
+import com.example.blog.domain.user.dto.UserPasswordRequest;
 import com.example.blog.domain.user.dto.UserResponseDto;
-import com.example.blog.domain.user.dto.UserUpdateRequestDto;
+import com.example.blog.domain.user.dto.UserUpdateRequest;
 import com.example.blog.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -32,10 +32,10 @@ public class UserService {
     }
 
     @Transactional
-    public User create(UserCreateRequestDto request) {
+    public User create(UserCreateRequest request) {
         log.info("사용자 생성");
         User createUser = request.toEntity();
-        log.info("INSERT : user");
+        log.info("INSERT : User");
         return userRepository.save(createUser);
     }
 
@@ -47,7 +47,7 @@ public class UserService {
     }
 
     @Transactional
-    public void update(Long userId, UserUpdateRequestDto request) {
+    public void update(Long userId, UserUpdateRequest request) {
         log.info("사용자 수정");
         User foundUser = verifyUserOwner(userId, request.userId());
         foundUser.update(request.email());
@@ -55,15 +55,15 @@ public class UserService {
     }
 
     @Transactional
-    public void delete(Long userId, UserUpdateRequestDto request) {
+    public void delete(Long userId, UserUpdateRequest request) {
         log.info("사용자 삭제");
         User foundUser = verifyUserOwner(userId, request.userId());
-        log.info("DELETE : user, cascade Post, Comment");
+        log.info("DELETE : User, cascade Post, Comment");
         userRepository.delete(foundUser);
     }
 
     @Transactional
-    public void resetPassword(Long userId, UserPasswordRequestDto request) {
+    public void resetPassword(Long userId, UserPasswordRequest request) {
         log.info("비밀번호 수정");
         User foundUser = verifyUserOwner(userId, request.userId());
         foundUser.resetPassword(request.password());

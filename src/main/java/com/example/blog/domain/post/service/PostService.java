@@ -1,9 +1,9 @@
 package com.example.blog.domain.post.service;
 
 import com.example.blog.domain.post.domain.Post;
-import com.example.blog.domain.post.dto.PostListResponseDto;
-import com.example.blog.domain.post.dto.PostRequestDto;
-import com.example.blog.domain.post.dto.PostReadResponseDto;
+import com.example.blog.domain.post.dto.PostListResponse;
+import com.example.blog.domain.post.dto.PostRequest;
+import com.example.blog.domain.post.dto.PostResponse;
 import com.example.blog.domain.post.repository.PostRepository;
 import com.example.blog.domain.user.domain.User;
 import com.example.blog.domain.user.service.UserService;
@@ -36,24 +36,24 @@ public class PostService {
     }
 
     @Transactional
-    public PostReadResponseDto read(Long postId){
+    public PostResponse read(Long postId){
         log.info("게시글 출력(게시물-사용자-댓글)");
         Post readPost = findFetchByPostId(postId);
         readPost.increaseViewCount();
         log.info("UPDATE: viewCount");
-        return PostReadResponseDto.fromEntity(readPost);
+        return PostResponse.fromEntity(readPost);
     }
 
     @Transactional(readOnly = true)
-    public List<PostListResponseDto> readAll(){
+    public List<PostListResponse> readAll(){
         log.info("게시글 목록 출력");
         log.info("SELECT : Post");
         return postRepository.findAll().stream()
-                .map(PostListResponseDto::fromEntity).toList();
+                .map(PostListResponse::fromEntity).toList();
     }
 
     @Transactional
-    public Post create(PostRequestDto request) {
+    public Post create(PostRequest request) {
         log.info("게시글 생성");
         User user = userService.findById(request.userId());
         Post createPost = request.toEntity(user);
@@ -63,7 +63,7 @@ public class PostService {
     }
 
     @Transactional
-    public void update(Long postId, PostRequestDto request) {
+    public void update(Long postId, PostRequest request) {
         log.info("게시글 수정");
         Post foundPost = verifyPostAuthor(postId, request.userId());
         foundPost.update(request.title(), request.content());
@@ -71,7 +71,7 @@ public class PostService {
     }
 
     @Transactional
-    public void delete(Long postId, PostRequestDto request) {
+    public void delete(Long postId, PostRequest request) {
         log.info("게시글 삭제");
         Post foundPost = verifyPostAuthor(postId, request.userId());
         postRepository.delete(foundPost);

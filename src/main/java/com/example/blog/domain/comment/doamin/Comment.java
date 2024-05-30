@@ -9,8 +9,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -29,7 +29,7 @@ public class Comment {
     private String content;
 
     @OneToMany(mappedBy = "comment", cascade = CascadeType.ALL)
-    private List<Likes> likes = new ArrayList<>();
+    private Set<Likes> likes = new HashSet<>();
 
     @Builder
     public Comment(Post post, User user, String content) {

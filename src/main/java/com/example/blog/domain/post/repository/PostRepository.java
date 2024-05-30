@@ -14,6 +14,6 @@ public interface PostRepository extends JpaRepository<Post, Long> {
 
     Optional<Post> findByTitleOrContent(String title, String content);
 
-    @Query("select p from Post p join fetch p.user left join fetch p.comments where p.id = :id")
+    @Query("select p from Post p join fetch p.user left join fetch p.comments c left join fetch c.likes where p.id = :id")
     Optional<Post> findFetchById(Long id);
 }
