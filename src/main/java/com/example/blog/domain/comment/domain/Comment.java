@@ -9,6 +9,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +26,8 @@ public class Comment {
     private String content;
 
     @Column(name = "likes", nullable = false)
-    private int likes = 0;
+    @ColumnDefault("0")
+    private int likes;
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.EAGER)
